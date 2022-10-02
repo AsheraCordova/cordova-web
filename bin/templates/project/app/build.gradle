@@ -1,0 +1,147 @@
+//gradle --stop
+//gradle clean deleteTeavmClasses genResources build copyTask teavmc --info
+apply plugin:'java'
+apply plugin: 'io.github.zebalu.teavm-gradle-plugin'
+
+configurations.all {
+   exclude group:"org.teavm", module: "teavm-classlib"
+   exclude group:"org.teavm.flavour", module: "teavm-flavour-json"
+}
+
+buildscript {
+    repositories {
+    	mavenLocal();
+        jcenter()
+    }
+
+    dependencies {
+    	def teavm_version = '0.6.1';
+		def teavm_flavour_version = '0.2.1';
+
+        classpath 'io.github.zebalu:teavm-gradle-plugin:+'
+        classpath "com.ashera:teavm-classlib:${teavm_version}"
+        classpath "com.ashera:teavm-flavour-json:${teavm_flavour_version}"
+		classpath group: 'commons-io', name: 'commons-io', version: '2.11.0'
+        
+    }
+}
+
+repositories {
+    // Use jcenter for resolving dependencies.
+    // You can declare any Maven/Ivy/file repository here.
+    jcenter()
+    mavenLocal()
+    mavenCentral()
+}
+
+// PLUGIN GRADLE EXTENSIONS START
+// PLUGIN GRADLE EXTENSIONS END
+
+
+apply plugin: 'project-report'
+
+
+teavm {
+   targetFileName = "classes.js";
+   targetDirectory = new File("src/main/assets/www/teavm");
+   mainClass = "com.ashera.Client";
+   debugInformationGenerated = false;
+   sourceMapsGenerated = false;
+   minifying=false;
+   sourceFilesCopied = false;
+   targetType = "JAVASCRIPT"; 
+   optimizationLevel = "ADVANCED"; //org.teavm.vm.TeaVMOptimizationLevel.SIMPLE;
+   /** Add name of configurations here where to look for jarfiles. */
+   includeJarsFrom = ['runtimeClasspath'];
+}
+
+task copyTask(type: Copy) {
+        from 'src/main/resources'
+        into 'build/classes/java/main'
+}
+
+task deleteTeavmClasses(type: Delete) {
+    delete fileTree('src/main/assets/www/teavm') {
+        include '**/classes.js'
+    }
+}
+
+task genResources() {
+		def buf = new StringBuffer();
+		buf.append("//start - body\n");
+
+		def paths = [ "${project.rootDir}/src/main/resources/www/layout", "${project.rootDir}/src/main/resources/font" ];
+		def prefix = [ "www/layout/", "font/" ];
+		def i = 0;
+		for (String path : paths) {
+			def f = new java.io.File(path);
+			def fileNames = f.list();
+
+			if (fileNames != null) {
+				for (def fileName : fileNames) {
+					buf.append("\"").append(prefix[i]).append(fileName).append("\",\n");
+				}
+			}
+			i++;
+		}
+		buf.append("//end - body");
+
+		//writeOrUpdateFile(buf.toString(), "src/main/java/com/ashera/ResourcesSupplier.java", "body");
+		def originalFile = new File("${project.rootDir}/src/main/java/com/ashera/ResourcesSupplier.java").text
+		def code = buf.toString();
+		def result = mergeStrings(originalFile, code);
+				System.out.println(code);
+		System.out.println(result);
+		new File("${project.rootDir}/src/main/java/com/ashera/ResourcesSupplier.java").withWriter { w -> w << result};
+
+		def f = new File("${project.rootDir}/src/main/resources/res/xml/config.xml");
+		def factory = javax.xml.parsers.DocumentBuilderFactory.newInstance();
+		def builder = factory.newDocumentBuilder();
+		def document = builder.parse(f);
+		def nodeList = document.getElementsByTagName("param");
+		buf = new StringBuffer();
+		buf.append("//start - body\n");
+		for (int j = 0; j < nodeList.getLength(); j++) {
+			def node = nodeList.item(j);
+			if ("android-package".equals(node.getAttributes().getNamedItem("name").getNodeValue())) {
+				buf.append("System.out.println(" + node.getAttributes().getNamedItem("value").getNodeValue() + ".class.getName());\n");
+			}
+			
+		}
+		buf.append("//end - body");
+		//writeOrUpdateFile(buf.toString(), "src/main/java/com/ashera/Client.java", "body");
+		originalFile = new File("${project.rootDir}/src/main/java/com/ashera/Client.java").text
+		code = buf.toString();
+		
+		result = mergeStrings(originalFile, code)
+		new File("${project.rootDir}/src/main/java/com/ashera/Client.java").withWriter { w -> w << result};
+}
+
+private mergeStrings(originalFile, code) {
+
+	def finalStr = '';
+	def keyWords = ["body"];
+	def startPrefix = "//start - ";
+	def endPrefix = "//end - ";
+	for (def j = 0; j < keyWords.size(); j++) {
+		def keyword = keyWords[j];
+
+		def startKeyWord = startPrefix + keyword;
+		def endKeyWord = endPrefix + keyword;
+
+		def startOrig = originalFile.indexOf(startKeyWord);
+		def endOrig = originalFile.indexOf(endKeyWord);
+		def startFinal = code.indexOf(startKeyWord);
+		def endFinal = code.indexOf(endKeyWord);
+		if (startOrig != -1) {
+			finalStr = originalFile.substring(0, startOrig) +
+				code.substring(startFinal, endFinal) +
+				originalFile.substring(endOrig, originalFile.length());
+			originalFile = finalStr;
+		} else {
+			finalStr = originalFile;
+		}
+	}
+	
+	return finalStr;
+}

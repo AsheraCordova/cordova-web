@@ -1,0 +1,64 @@
+<html>
+<head>
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta http-equiv="Content-Security-Policy" content="default-src *  data: blob: 'unsafe-inline' 'unsafe-eval'; script-src * 'unsafe-inline' 'unsafe-eval'; " />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link rel="stylesheet" type="text/css" href="css/font.css">
+    
+    <title>Hello World</title>
+    <style type="text/css">
+    #dpi {
+	    height: 1in;
+	    left: -999999px;
+	    position: absolute;
+	    top:-999999px;
+	    width: 1in;
+	}
+    </style>
+</head>
+<body>
+<div class="app">
+    <h1>Apache Cordova</h1>
+    <div id="deviceready" class="blink">
+        <p class="event listening">Connecting to Device</p>
+        <p class="event received">Device is Ready2</p>
+        <div id="dpi"></div>
+        <div style="font-family:'Roboto'">&nbsp;</div>
+    </div>
+     
+</div>
+<div id="shadowhost"></div>
+<script>	
+	function loadScript(url) {
+    	document.body.appendChild(document.createElement("script")).src = url;
+	}
+
+	function loadedCordova() {
+		let style = document.createElement('style');
+		style.textContent = ':host { all: initial }';
+		var host = document.getElementById('shadowhost');
+	    window.shadowRoot=host.attachShadow({mode: 'open'});
+	    window.shadowRoot.appendChild(style);
+	    
+	    if (window.isRTLLayout()) {
+	    	host.dir = "rtl";
+	    }
+	    
+		loadScript('cordova.js');  
+		loadScript('js/index.js?v=' + new Date().getTime());
+		main();
+	}
+</script>
+<!-- prod script -->
+<!-- script type="text/javascript" src="cordova.js"></script> -->
+<!--<script type="text/javascript" src="js/bundle.js"></script> -->
+<!-- dev script -->
+<script type="text/javascript" charset="utf-8" src="js/window_ext.js"></script>
+<script type="text/javascript" charset="utf-8" src="teavm/classes.js" onload="loadedCordova()"></script>
+<!--script type="text/javascript" src="http://192.168.1.149:8080/assets/www/js/bundle.js?v=149"></script-->
+
+</body>
+</html>
+	
