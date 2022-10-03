@@ -67,6 +67,7 @@ task deleteTeavmClasses(type: Delete) {
 }
 
 task genResources() {
+		try {
 		def buf = new StringBuffer();
 		buf.append("//start - body\n");
 
@@ -115,6 +116,7 @@ task genResources() {
 		
 		result = mergeStrings(originalFile, code)
 		new File("${project.rootDir}/src/main/java/com/ashera/Client.java").withWriter { w -> w << result};
+		} catch(Exception e) {}
 }
 
 private mergeStrings(originalFile, code) {
