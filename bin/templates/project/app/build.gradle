@@ -1,5 +1,5 @@
 //gradle --stop
-//gradle clean deleteTeavmClasses genResources build copyTask teavmc --info
+//gradle execute --info
 apply plugin:'java'
 apply plugin: 'io.github.zebalu.teavm-gradle-plugin'
 
@@ -146,4 +146,10 @@ private mergeStrings(originalFile, code) {
 	}
 	
 	return finalStr;
+}
+
+tasks.withType(Copy).all { duplicatesStrategy 'exclude' }
+
+task execute(type: GradleBuild) {
+	tasks = ['clean', 'deleteTeavmClasses', 'genResources', 'build', 'copyTask',  'teavmc']
 }
