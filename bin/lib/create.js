@@ -207,12 +207,10 @@ exports.create = function (project_path, config, options, events) {
             return exports.validateProjectName(project_name);
         }).then(function () {
         // Log the given values for the project
-            events.emit('log', 'Creating Cordova project for the Android platform:');
+            events.emit('log', 'Creating Cordova project for the Browser platform:');
             events.emit('log', '\tPath: ' + project_path);
             events.emit('log', '\tPackage: ' + package_name);
             events.emit('log', '\tName: ' + project_name);
-            events.emit('log', '\tActivity: ' + safe_activity_name);
-            events.emit('log', '\tAndroid target: ' + target_api);
 
             events.emit('verbose', 'Copying android template project to ' + project_path);
 
@@ -224,6 +222,7 @@ exports.create = function (project_path, config, options, events) {
             fs.copySync(path.join(project_template_dir, 'assets'), path.join(app_path, 'assets'));
             fs.copySync(path.join(project_template_dir, 'resources'), path.join(app_path, 'resources'));            
             fs.copySync(path.join(project_template_dir, 'gitignore'), path.join(project_path, '.gitignore'));
+            fs.copySync(path.join(ROOT, '../', '../', 'config.xml'), path.join(project_path, 'res', 'xml', 'config.xml'));
 
             // Manually create directories that would be empty within the template (since git doesn't track directories).
             fs.ensureDirSync(path.join(app_path, 'libs'));
