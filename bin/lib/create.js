@@ -222,7 +222,7 @@ exports.create = function (project_path, config, options, events) {
             fs.copySync(path.join(project_template_dir, 'assets'), path.join(app_path, 'assets'));
             fs.copySync(path.join(project_template_dir, 'resources'), path.join(app_path, 'resources'));            
             fs.copySync(path.join(project_template_dir, 'gitignore'), path.join(project_path, '.gitignore'));
-            fs.copySync(path.join(ROOT, '../', '../', 'config.xml'), path.join(project_path, 'res', 'xml', 'config.xml'));
+            fs.copySync(path.join(ROOT, '../', '../', 'config.xml'), path.join(project_path, 'config.xml'));
 
             // Manually create directories that would be empty within the template (since git doesn't track directories).
             fs.ensureDirSync(path.join(app_path, 'libs'));
