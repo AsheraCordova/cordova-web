@@ -29,13 +29,14 @@
     </div>
      
 </div>
-<div id="shadowhost"></div>
+<div id="shadowhost" style="position: absolute;left: 0;top:0; bottom: 0;margin-left: auto;margin-right: auto;right: 0; "></div>
 <script>	
 	function loadScript(url) {
     	document.body.appendChild(document.createElement("script")).src = url;
 	}
 
-	function loadedCordova() {
+
+	function loadCordova() {
 		let style = document.createElement('style');
 		style.textContent = ':host { all: initial }';
 		var host = document.getElementById('shadowhost');
@@ -47,18 +48,18 @@
 	    }
 	    
 		loadScript('cordova.js');  
-		loadScript('js/index.js?v=' + new Date().getTime());
-		main();
+		loadScript('js/index.js');
 	}
+	
+	document.addEventListener("DOMContentLoaded", function(event) { 
+		var host = document.getElementById('shadowhost');
+		window.shadowDomWidth = shadowhost.clientWidth;
+		window.shadowDomHeight = shadowhost.clientHeight;
+		main();
+	});
 </script>
-<!-- prod script -->
-<!-- script type="text/javascript" src="cordova.js"></script> -->
-<!--<script type="text/javascript" src="js/bundle.js"></script> -->
-<!-- dev script -->
 <script type="text/javascript" charset="utf-8" src="js/window_ext.js"></script>
-<script type="text/javascript" charset="utf-8" src="teavm/classes.js" onload="loadedCordova()"></script>
-<!--script type="text/javascript" src="http://192.168.1.149:8080/assets/www/js/bundle.js?v=149"></script-->
-
+<script type="text/javascript" charset="utf-8" src="teavm/classes.js" onload="loadCordova()"></script>
 </body>
 </html>
 	
