@@ -78,7 +78,7 @@ class Api {
             www: path.join(appMain, 'assets', 'www'),
             res: appRes,
             platformWww: path.join(this.root, 'platform_www'),
-            configXml: path.join(appRes, 'xml', 'config.xml'),
+            configXml: path.join(this.root, 'config.xml'),
             defaultConfigXml: path.join(this.root, 'cordova', 'defaults.xml'),
             strings: path.join(appRes, 'values', 'strings.xml'),
             manifest: path.join(appMain, 'AndroidManifest.xml'),
