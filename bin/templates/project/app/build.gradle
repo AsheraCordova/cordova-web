@@ -2,7 +2,8 @@
 //gradle execute --info
 apply plugin:'java'
 apply plugin: 'io.github.zebalu.teavm-gradle-plugin'
-
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 configurations.all {
    exclude group:"org.teavm", module: "teavm-classlib"
    exclude group:"org.teavm.flavour", module: "teavm-flavour-json"
