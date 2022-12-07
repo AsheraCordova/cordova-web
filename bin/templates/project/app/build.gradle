@@ -12,6 +12,13 @@ buildscript {
     repositories {
     	mavenLocal();
         jcenter()
+       	maven {
+    		url "https://raw.githubusercontent.com/AsheraCordova/mvn-ashera-java-repo/master/"
+		}
+	
+		maven {
+    		url "https://raw.githubusercontent.com/AsheraCordova/mvn-ashera-web-repo/master/"
+		}
     }
 
     dependencies {
@@ -32,6 +39,14 @@ repositories {
     jcenter()
     mavenLocal()
     mavenCentral()
+    
+	maven {
+		url "https://raw.githubusercontent.com/AsheraCordova/mvn-ashera-java-repo/master/"
+	}
+
+	maven {
+		url "https://raw.githubusercontent.com/AsheraCordova/mvn-ashera-web-repo/master/"
+	}    
 }
 
 // PLUGIN GRADLE EXTENSIONS START
