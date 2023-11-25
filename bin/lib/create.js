@@ -95,6 +95,7 @@ function copyBuildRules (projectPath, isLegacy) {
     } else {
         fs.copySync(path.join(srcDir, 'app', 'build.gradle'), path.join(projectPath, 'app', 'build.gradle'));
         fs.copySync(path.join(srcDir, 'app', 'settings.gradle'), path.join(projectPath, 'app', 'settings.gradle'));
+        fs.copySync(path.join(srcDir, 'app', 'gradle.properties'), path.join(projectPath, 'app', 'gradle.properties'));
     }
 }
 
