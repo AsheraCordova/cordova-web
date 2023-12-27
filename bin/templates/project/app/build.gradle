@@ -87,7 +87,7 @@ task genResources() {
 		buf.append("//start - body\n");
 
 		def paths = [ "${project.rootDir}/src/main/resources/www/layout", "${project.rootDir}/src/main/resources/font", "${project.rootDir}/src/main/resources/res/xml",
-			"${project.rootDir}/src/main/resources/res/anim" "${project.rootDir}/src/main/resources/res/animator",  ];
+			"${project.rootDir}/src/main/resources/res/anim", "${project.rootDir}/src/main/resources/res/animator"];
 		def prefix = [ "www/layout/", "font/", "res/xml/", "res/anim/", "res/animator/" ];
 		def i = 0;
 		for (String path : paths) {
