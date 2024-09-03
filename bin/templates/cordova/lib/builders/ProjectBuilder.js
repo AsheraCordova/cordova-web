@@ -25,6 +25,7 @@ var CordovaError = require('cordova-common').CordovaError;
 var check_reqs = require('../check_reqs');
 var PackageType = require('../PackageType');
 const { createEditor } = require('properties-parser');
+const CordovaGradleConfigParserFactory = require('../config/CordovaGradleConfigParserFactory');
 
 const MARKER = 'YOUR CHANGES WILL BE ERASED!';
 const SIGNING_PROPERTIES = '-signing.properties';
@@ -180,16 +181,9 @@ class ProjectBuilder {
     }
 
     extractRealProjectNameFromManifest () {
-        var manifestPath = path.join(this.root + "../../../platforms/android/", 'app', 'src', 'main', 'AndroidManifest.xml');
-        var manifestData = fs.readFileSync(manifestPath, 'utf8');
-        var m = /<manifest[\s\S]*?package\s*=\s*"(.*?)"/i.exec(manifestData);
-        if (!m) {
-            throw new CordovaError('Could not find package name in ' + manifestPath);
-        }
-
-        var packageName = m[1];
-        var lastDotIndex = packageName.lastIndexOf('.');
-        return packageName.substring(lastDotIndex + 1);
+        const cdvGradleConfig = CordovaGradleConfigParserFactory.create(path.join(this.root + "../../../platforms/android/"));
+        const projectName = cdvGradleConfig.getProjectNameFromPackageName();
+        return projectName;
     }
 
     // Makes the project buildable, minus the gradle wrapper.
