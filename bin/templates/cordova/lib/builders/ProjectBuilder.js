@@ -180,7 +180,7 @@ class ProjectBuilder {
     }
 
     extractRealProjectNameFromManifest () {
-        var manifestPath = path.join(this.root, 'app', 'src', 'main', 'AndroidManifest.xml');
+        var manifestPath = path.join(this.root + "../../../platforms/android/", 'app', 'src', 'main', 'AndroidManifest.xml');
         var manifestData = fs.readFileSync(manifestPath, 'utf8');
         var m = /<manifest[\s\S]*?package\s*=\s*"(.*?)"/i.exec(manifestData);
         if (!m) {

@@ -72,7 +72,7 @@ class AndroidProject {
      * @return  {String}              The name of the package
      */
     getPackageName () {
-        var manifestPath = path.join(this.projectDir, 'app/src/main/AndroidManifest.xml');
+        var manifestPath = path.join(this.projectDir, '../../platforms/android/app/src/main/AndroidManifest.xml');
         var packageId = new AndroidManifest(manifestPath).getPackageId(); if (!packageId || packageId == '') {packageId = this.cordovaGradleConfigParser.getPackageName();} return packageId;
     }
 
