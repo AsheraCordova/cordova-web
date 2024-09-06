@@ -57,7 +57,7 @@ function getRelativeLibraryPath (parentDir, subDir) {
 
 class AndroidProject {
     constructor (projectDir) {
-        this.cordovaGradleConfigParser = CordovaGradleConfigParserFactory.create(path.join(this.projectDir, '../../platforms/android/'));this._propertiesEditors = {};
+        this.cordovaGradleConfigParser = CordovaGradleConfigParserFactory.create(path.join(projectDir, '../../platforms/android/'));this._propertiesEditors = {};
         this._subProjectDirs = {};
         this._dirty = false;
         this.projectDir = projectDir;
