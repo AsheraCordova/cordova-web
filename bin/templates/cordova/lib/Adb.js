@@ -90,7 +90,7 @@ Adb.shell = function (target, shellCommand) {
 
 Adb.start = function (target, activityName) {
     events.emit('verbose', 'Starting application "' + activityName + '" on target ' + target + '...');
-    return Adb.shell(target, 'am start -W -a android.intent.action.MAIN -n' + activityName).catch((error) => {
+    return Adb.shell(target, 'am start -W -a  android.intent.action.MAIN -n' + activityName).catch((error) => {
         return Promise.reject(new CordovaError('Failed to start application "' +
             activityName + '"" on device: ' + error));
     });

@@ -41,8 +41,38 @@ function getFrameworkDir (projectPath, shared) {
     return shared ? path.join(ROOT, 'framework') : path.join(projectPath, 'CordovaLib');
 }
 
-function copyJsAndLibrary (projectPath, shared, projectName, isLegacy) {
+function copyJsAndLibrary (projectPath, shared, projectName, isLegacy) {} function copyJsAndLibrary1 (projectPath, shared, projectName, isLegacy) { 
+    var nestedCordovaLibPath = getFrameworkDir(projectPath, false);
+    var srcCordovaJsPath = path.join(ROOT, 'bin', 'templates', 'project', 'assets', 'www', 'cordova.js');
+    var app_path = path.join(projectPath, 'app', 'src', 'main');
+    const platform_www = path.join(projectPath, 'platform_www');
 
+    if (isLegacy) {
+        app_path = projectPath;
+    }
+
+    fs.copySync(srcCordovaJsPath, path.join(app_path, 'assets', 'www', 'cordova.js'));
+
+    // Copy the cordova.js file to platforms/<platform>/platform_www/
+    // The www dir is nuked on each prepare so we keep cordova.js in platform_www
+    fs.ensureDirSync(platform_www);
+    fs.copySync(srcCordovaJsPath, path.join(platform_www, 'cordova.js'));
+
+    // Copy cordova-js-src directory into platform_www directory.
+    // We need these files to build cordova.js if using browserify method.
+    fs.copySync(path.join(ROOT, 'cordova-js-src'), path.join(platform_www, 'cordova-js-src'));
+
+    if (shared) {
+        var relativeFrameworkPath = path.relative(projectPath, getFrameworkDir(projectPath, true));
+        fs.symlinkSync(relativeFrameworkPath, nestedCordovaLibPath, 'dir');
+    } else {
+        fs.ensureDirSync(nestedCordovaLibPath);
+        fs.copySync(path.join(ROOT, 'framework', 'AndroidManifest.xml'), path.join(nestedCordovaLibPath, 'AndroidManifest.xml'));
+        fs.copySync(path.join(ROOT, 'framework', 'project.properties'), path.join(nestedCordovaLibPath, 'project.properties'));
+        fs.copySync(path.join(ROOT, 'framework', 'build.gradle'), path.join(nestedCordovaLibPath, 'build.gradle'));
+        fs.copySync(path.join(ROOT, 'framework', 'cordova.gradle'), path.join(nestedCordovaLibPath, 'cordova.gradle'));
+        fs.copySync(path.join(ROOT, 'framework', 'src'), path.join(nestedCordovaLibPath, 'src'));
+    }
 }
 
 function extractSubProjectPaths (data) {
@@ -91,11 +121,11 @@ function copyBuildRules (projectPath, isLegacy) {
     if (isLegacy) {
         // The project's build.gradle is identical to the earlier build.gradle, so it should still work
         fs.copySync(path.join(srcDir, 'legacy', 'build.gradle'), path.join(projectPath, 'legacy', 'build.gradle'));
-        fs.copySync(path.join(srcDir, 'wrapper.gradle'), path.join(projectPath, 'wrapper.gradle'));
+        fs.copySync(path.join(srcDir, 'app', 'settings.gradle'), path.join(projectPath, 'app', 'settings.gradle'));
     } else {
+        fs.copySync(path.join(srcDir, 'app', 'gradle.properties'), path.join(projectPath, 'app', 'gradle.properties'));//fs1.copySync(path.join(srcDir, 'build.gradle'), path.join(projectPath, 'build.gradle'));
         fs.copySync(path.join(srcDir, 'app', 'build.gradle'), path.join(projectPath, 'app', 'build.gradle'));
         fs.copySync(path.join(srcDir, 'app', 'settings.gradle'), path.join(projectPath, 'app', 'settings.gradle'));
-        fs.copySync(path.join(srcDir, 'app', 'gradle.properties'), path.join(projectPath, 'app', 'gradle.properties'));
     }
 }
 
@@ -212,6 +242,8 @@ exports.create = function (project_path, config, options, events) {
             events.emit('log', '\tPath: ' + project_path);
             events.emit('log', '\tPackage: ' + package_name);
             events.emit('log', '\tName: ' + project_name);
+            //events.emit('log', '	Activity: ' + safe_activity_name);
+            //events.emit('log', '	Android target: ' + target_api);
 
             events.emit('verbose', 'Copying android template project to ' + project_path);
 
@@ -221,9 +253,8 @@ exports.create = function (project_path, config, options, events) {
             // copy project template
             fs.ensureDirSync(app_path);
             fs.copySync(path.join(project_template_dir, 'assets'), path.join(app_path, 'assets'));
-            fs.copySync(path.join(project_template_dir, 'resources'), path.join(app_path, 'resources'));            
+            fs.copySync(path.join(project_template_dir, 'resources'), path.join(app_path, 'resources'));fs.copySync(path.join(ROOT, '../', '../', 'config.xml'), path.join(project_path, 'config.xml'));
             fs.copySync(path.join(project_template_dir, 'gitignore'), path.join(project_path, '.gitignore'));
-            fs.copySync(path.join(ROOT, '../', '../', 'config.xml'), path.join(project_path, 'config.xml'));
 
             // Manually create directories that would be empty within the template (since git doesn't track directories).
             fs.ensureDirSync(path.join(app_path, 'libs'));
@@ -238,26 +269,31 @@ exports.create = function (project_path, config, options, events) {
             fs.ensureDirSync(java_path);
             fs.ensureDirSync(assets_path);
             fs.ensureDirSync(resource_path);
- 
+
             // interpolate the activity name and package
             var packagePath = package_name.replace(/\./g, path.sep);
-            // var activity_dir = path.join(java_path, packagePath);
-            // var activity_path = path.join(activity_dir, 'TestApp.java');
+            /*var activity_dir = path.join(java_path, packagePath);
+            var activity_path = path.join(activity_dir, safe_activity_name + '.java');
 
-            // fs.ensureDirSync(activity_dir);
-            // fs.copySync(path.join(project_template_dir, 'TestApp.java'), activity_path);
-            // utils.replaceFileContents(activity_path, /__ID__/, package_name);
+            fs.ensureDirSync(activity_dir);
+            fs.copySync(path.join(project_template_dir, 'Activity.java'), activity_path);
+            utils.replaceFileContents(activity_path, /__ACTIVITY__/, safe_activity_name);
+            utils.replaceFileContents(path.join(app_path, 'res', 'values', 'strings.xml'), /__NAME__/, project_name);
+            utils.replaceFileContents(activity_path, /__ID__/, package_name);
 
-            // var sleak_path = path.join(activity_dir, 'Sleak.java');
-            // fs.copySync(path.join(project_template_dir, 'Sleak.java'), sleak_path);
-            // utils.replaceFileContents(sleak_path, /__ID__/, package_name);
+            var manifest = new AndroidManifest(path.join(project_template_dir, 'AndroidManifest.xml'));
+            manifest.setPackageId(package_name)
+                .getActivity().setName(safe_activity_name);
+
+            var manifest_path = path.join(app_path, 'AndroidManifest.xml');
+            manifest.write(manifest_path);*/
 
             exports.copyScripts(project_path);
             exports.copyBuildRules(project_path);
 
             // Link it to local android install.
-            // exports.writeProjectProperties(project_path, target_api);
-            // exports.prepBuildFiles(project_path);
+            //exports.writeProjectProperties(project_path, target_api);
+            //exports.prepBuildFiles(project_path);
             events.emit('log', generateDoneMessage('create', options.link));
         }).then(() => project_path);
 };

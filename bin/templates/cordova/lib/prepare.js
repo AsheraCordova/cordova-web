@@ -32,7 +32,7 @@ var PlatformMunger = require('cordova-common').ConfigChanges.PlatformMunger;
 var PluginInfoProvider = require('cordova-common').PluginInfoProvider;
 const utils = require('./utils');
 
-// const GradlePropertiesParser = require('./config/GradlePropertiesParser');
+const GradlePropertiesParser = require('./config/GradlePropertiesParser');
 
 function parseArguments (argv) {
     return nopt({
@@ -53,6 +53,32 @@ module.exports.prepare = function (cordovaProject, options) {
     var munger = new PlatformMunger(this.platform, this.locations.root, platformJson, new PluginInfoProvider());
 
     this._config = updateConfigFilesFrom(cordovaProject.projectConfig, munger, this.locations);
+
+    // Get the min SDK version from config.xml
+    /*const minSdkVersion = this._config.getPreference('android-minSdkVersion', 'android');
+    const maxSdkVersion = this._config.getPreference('android-maxSdkVersion', 'android');
+    const targetSdkVersion = this._config.getPreference('android-targetSdkVersion', 'android');
+    const androidXEnabled = this._config.getPreference('AndroidXEnabled', 'android');
+    const isGradlePluginKotlinEnabled = this._config.getPreference('GradlePluginKotlinEnabled', 'android');
+    const gradlePluginKotlinCodeStyle = this._config.getPreference('GradlePluginKotlinCodeStyle', 'android');
+
+    const gradlePropertiesUserConfig = {};
+    if (minSdkVersion) gradlePropertiesUserConfig.cdvMinSdkVersion = minSdkVersion;
+    if (maxSdkVersion) gradlePropertiesUserConfig.cdvMaxSdkVersion = maxSdkVersion;
+    if (targetSdkVersion) gradlePropertiesUserConfig.cdvTargetSdkVersion = targetSdkVersion;
+    if (args.jvmargs) gradlePropertiesUserConfig['org.gradle.jvmargs'] = args.jvmargs;
+    if (isGradlePluginKotlinEnabled) {
+        gradlePropertiesUserConfig['kotlin.code.style'] = gradlePluginKotlinCodeStyle || 'official';
+    }
+
+    // Both 'useAndroidX' and 'enableJetifier' are linked together.
+    if (androidXEnabled) {
+        gradlePropertiesUserConfig['android.useAndroidX'] = androidXEnabled;
+        gradlePropertiesUserConfig['android.enableJetifier'] = androidXEnabled;
+    }
+
+    const gradlePropertiesParser = new GradlePropertiesParser(this.locations.root);
+    gradlePropertiesParser.configure(gradlePropertiesUserConfig);*/            
 
     // Update own www dir with project's www assets and plugins' assets and js-files
     return Promise.resolve(updateWww(cordovaProject, this.locations)).then(function () {
@@ -140,20 +166,36 @@ function logFileOp (message) {
  * @param   {Object}  destinations      An object that contains destination
  *   paths for www files.
  */
-function updateWww (cordovaProject, destinations) {
+function updateWww (cordovaProject, destinations) {} function updateWww1 (cordovaProject, destinations) {
+    var sourceDirs = [
+        path.relative(cordovaProject.root, cordovaProject.locations.www),
+        path.relative(cordovaProject.root, destinations.platformWww)
+    ];
 
+    // If project contains 'merges' for our platform, use them as another overrides
+    var merges_path = path.join(cordovaProject.root, 'merges', 'android');
+    if (fs.existsSync(merges_path)) {
+        events.emit('verbose', 'Found "merges/android" folder. Copying its contents into the android project.');
+        sourceDirs.push(path.join('merges', 'android'));
+    }
+
+    var targetDir = path.relative(cordovaProject.root, destinations.www);
+    events.emit(
+        'verbose', 'Merging and updating files from [' + sourceDirs.join(', ') + '] to ' + targetDir);
+    FileUpdater.mergeAndUpdateDir(
+        sourceDirs, targetDir, { rootDir: cordovaProject.root }, logFileOp);
 }
 
 /**
  * Cleans all files from the platform 'www' directory.
  */
-function cleanWww (projectRoot, locations) {
-    // var targetDir = path.relative(projectRoot, locations.www);
-    // events.emit('verbose', 'Cleaning ' + targetDir);
+function cleanWww (projectRoot, locations) {} function cleanWww1 (projectRoot, locations) {
+    var targetDir = path.relative(projectRoot, locations.www);
+    events.emit('verbose', 'Cleaning ' + targetDir);
 
-    // // No source paths are specified, so mergeAndUpdateDir() will clear the target directory.
-    // FileUpdater.mergeAndUpdateDir(
-    //     [], targetDir, { rootDir: projectRoot, all: true }, logFileOp);
+    // No source paths are specified, so mergeAndUpdateDir() will clear the target directory.
+    FileUpdater.mergeAndUpdateDir(
+        [], targetDir, { rootDir: projectRoot, all: true }, logFileOp);
 }
 
 /**
@@ -163,7 +205,79 @@ function cleanWww (projectRoot, locations) {
  *   be used to update project
  * @param   {Object}  locations       A map of locations for this platform
  */
-function updateProjectAccordingTo (platformConfig, locations) {
+function updateProjectAccordingTo (platformConfig, locations) {} function updateProjectAccordingTo1 (platformConfig, locations) {
+    // Update app name by editing res/values/strings.xml
+    var strings = xmlHelpers.parseElementtreeSync(locations.strings);
+
+    var name = platformConfig.name();
+    strings.find('string[@name="app_name"]').text = name.replace(/'/g, '\\\'');
+
+    var shortName = platformConfig.shortName && platformConfig.shortName();
+    if (shortName && shortName !== name) {
+        strings.find('string[@name="launcher_name"]').text = shortName.replace(/'/g, '\\\'');
+    }
+
+    fs.writeFileSync(locations.strings, strings.write({ indent: 4 }), 'utf-8');
+    events.emit('verbose', 'Wrote out android application name "' + name + '" to ' + locations.strings);
+
+    // Java packages cannot support dashes
+    var androidPkgName = (platformConfig.android_packageName() || platformConfig.packageName()).replace(/-/g, '_');
+
+    var manifest = new AndroidManifest(locations.manifest);
+    var manifestId = manifest.getPackageId();
+
+    manifest.getActivity()
+        .setOrientation(platformConfig.getPreference('orientation'))
+        .setLaunchMode(findAndroidLaunchModePreference(platformConfig));
+
+    manifest.setVersionName(platformConfig.version())
+        .setVersionCode(platformConfig.android_versionCode() || default_versionCode(platformConfig.version()))
+        .setPackageId(androidPkgName)
+        .write();
+
+    // Java file paths shouldn't be hard coded
+    const javaDirectory = path.join(locations.javaSrc, manifestId.replace(/\./g, '/'));
+    const javaPattern = /\.java$/;
+    const java_files = utils.scanDirectory(javaDirectory, javaPattern, true).filter(function (f) {
+        return utils.grep(f, /extends\s+CordovaActivity/g) !== null;
+    });
+
+    if (java_files.length === 0) {
+        throw new CordovaError('No Java files found that extend CordovaActivity.');
+    } else if (java_files.length > 1) {
+        events.emit('log', 'Multiple candidate Java files that extend CordovaActivity found. Guessing at the first one, ' + java_files[0]);
+    }
+
+    const destFile = java_files[0];
+
+    // var destFile = path.join(locations.root, 'app', 'src', 'main', 'java', androidPkgName.replace(/\./g, '/'), path.basename(java_files[0]));
+    // fs.ensureDirSync(path.dirname(destFile));
+    // events.emit('verbose', java_files[0]);
+    // events.emit('verbose', destFile);
+    // console.log(locations);
+    // fs.copySync(java_files[0], destFile);
+    utils.replaceFileContents(destFile, /package [\w.]*;/, 'package ' + androidPkgName + ';');
+    events.emit('verbose', 'Wrote out Android package name "' + androidPkgName + '" to ' + destFile);
+
+    var removeOrigPkg = checkReqs.isWindows() || checkReqs.isDarwin()
+        ? manifestId.toUpperCase() !== androidPkgName.toUpperCase()
+        : manifestId !== androidPkgName;
+
+    if (removeOrigPkg) {
+        // If package was name changed we need to remove old java with main activity
+        fs.removeSync(java_files[0]);
+        // remove any empty directories
+        var currentDir = path.dirname(java_files[0]);
+        var sourcesRoot = path.resolve(locations.root, 'src');
+        while (currentDir !== sourcesRoot) {
+            if (fs.existsSync(currentDir) && fs.readdirSync(currentDir).length === 0) {
+                fs.rmdirSync(currentDir);
+                currentDir = path.resolve(currentDir, '..');
+            } else {
+                break;
+            }
+        }
+    }
 }
 
 // Consturct the default value for versionCode as

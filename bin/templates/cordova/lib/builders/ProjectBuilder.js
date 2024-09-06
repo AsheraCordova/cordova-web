@@ -17,7 +17,7 @@
        under the License.
 */
 
-var fs = require('fs-extra');
+const CordovaGradleConfigParserFactory = require('../config/CordovaGradleConfigParserFactory');var fs = require('fs-extra');
 var path = require('path');
 const execa = require('execa');
 var events = require('cordova-common').events;
@@ -25,7 +25,6 @@ var CordovaError = require('cordova-common').CordovaError;
 var check_reqs = require('../check_reqs');
 var PackageType = require('../PackageType');
 const { createEditor } = require('properties-parser');
-const CordovaGradleConfigParserFactory = require('../config/CordovaGradleConfigParserFactory');
 
 const MARKER = 'YOUR CHANGES WILL BE ERASED!';
 const SIGNING_PROPERTIES = '-signing.properties';
@@ -181,9 +180,16 @@ class ProjectBuilder {
     }
 
     extractRealProjectNameFromManifest () {
-        const cdvGradleConfig = CordovaGradleConfigParserFactory.create(path.join(this.root + "../../../platforms/android/"));
-        const projectName = cdvGradleConfig.getProjectNameFromPackageName();
-        return projectName;
+        var manifestPath = path.join(this.root, 'app', 'src', 'main', 'AndroidManifest.xml');
+        var manifestData = fs.readFileSync(manifestPath, 'utf8');
+        var m = /<manifest[\s\S]*?package\s*=\s*"(.*?)"/i.exec(manifestData);
+        if (!m) {
+            const cdvGradleConfig = CordovaGradleConfigParserFactory.create(path.join(this.root + "../../../platforms/android/"));const projectName = cdvGradleConfig.getProjectNameFromPackageName();return projectName;
+        }
+
+        var packageName = m[1];
+        var lastDotIndex = packageName.lastIndexOf('.');
+        return packageName.substring(lastDotIndex + 1);
     }
 
     // Makes the project buildable, minus the gradle wrapper.

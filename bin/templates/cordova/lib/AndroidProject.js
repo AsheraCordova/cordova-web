@@ -17,16 +17,16 @@
     under the License.
 */
 
-const fs = require('fs');
-const path = require('path');
-const properties_parser = require('properties-parser');
-const pluginHandlers = require('./pluginHandlers');
-const CordovaGradleConfigParserFactory = require('./config/CordovaGradleConfigParserFactory');
+var fs = require('fs');
+var path = require('path');
+var properties_parser = require('properties-parser');
+var AndroidManifest = require('./AndroidManifest');
+var pluginHandlers = require('./pluginHandlers');
 
-let projectFileCache = {};
+const CordovaGradleConfigParserFactory = require('./config/CordovaGradleConfigParserFactory');var projectFileCache = {};
 
 function addToPropertyList (projectProperties, key, value) {
-    let i = 1;
+    var i = 1;
     while (projectProperties.get(key + '.' + i)) { i++; }
 
     projectProperties.set(key + '.' + i, value);
@@ -34,8 +34,8 @@ function addToPropertyList (projectProperties, key, value) {
 }
 
 function removeFromPropertyList (projectProperties, key, value) {
-    let i = 1;
-    let currentValue;
+    var i = 1;
+    var currentValue;
     while ((currentValue = projectProperties.get(key + '.' + i))) {
         if (currentValue === value) {
             while ((currentValue = projectProperties.get(key + '.' + (i + 1)))) {
@@ -51,48 +51,48 @@ function removeFromPropertyList (projectProperties, key, value) {
 }
 
 function getRelativeLibraryPath (parentDir, subDir) {
-    const libraryPath = path.relative(parentDir, subDir);
+    var libraryPath = path.relative(parentDir, subDir);
     return (path.sep === '\\') ? libraryPath.replace(/\\/g, '/') : libraryPath;
 }
 
 class AndroidProject {
     constructor (projectDir) {
-        this._propertiesEditors = {};
+        this.cordovaGradleConfigParser = CordovaGradleConfigParserFactory.create(path.join(this.projectDir, '../../platforms/android/'));this._propertiesEditors = {};
         this._subProjectDirs = {};
         this._dirty = false;
         this.projectDir = projectDir;
         this.platformWww = path.join(this.projectDir, 'platform_www');
         this.www = path.join(this.projectDir, 'app/src/main/assets/www');
-        this.cordovaGradleConfigParser = CordovaGradleConfigParserFactory.create(path.join(this.projectDir, '../../platforms/android/'));
     }
 
     /**
-     * Reads the package name out of the Cordova's Gradle Config file
+     * Reads the package name out of the Android Manifest file
      *
      * @param   {String}  projectDir  The absolute path to the directory containing the project
      * @return  {String}              The name of the package
      */
     getPackageName () {
-        return this.cordovaGradleConfigParser.getPackageName();
+        var manifestPath = path.join(this.projectDir, 'app/src/main/AndroidManifest.xml');
+        var packageId = new AndroidManifest(manifestPath).getPackageId(); if (!packageId || packageId == '') {packageId = this.cordovaGradleConfigParser.getPackageName();} return packageId;
     }
 
     getCustomSubprojectRelativeDir (plugin_id, src) {
         // All custom subprojects are prefixed with the last portion of the package id.
         // This is to avoid collisions when opening multiple projects in Eclipse that have subprojects with the same name.
-        const packageName = this.getPackageName();
-        const lastDotIndex = packageName.lastIndexOf('.');
-        const prefix = packageName.substring(lastDotIndex + 1);
-        const subRelativeDir = path.join(plugin_id, prefix + '-' + path.basename(src));
+        var packageName = this.getPackageName();
+        var lastDotIndex = packageName.lastIndexOf('.');
+        var prefix = packageName.substring(lastDotIndex + 1);
+        var subRelativeDir = path.join(plugin_id, prefix + '-' + path.basename(src));
         return subRelativeDir;
     }
 
     addSubProject (parentDir, subDir) {
-        const parentProjectFile = path.resolve(parentDir, 'project.properties');
-        const subProjectFile = path.resolve(subDir, 'project.properties');
-        const parentProperties = this._getPropertiesFile(parentProjectFile);
+        var parentProjectFile = path.resolve(parentDir, 'project.properties');
+        var subProjectFile = path.resolve(subDir, 'project.properties');
+        var parentProperties = this._getPropertiesFile(parentProjectFile);
         // TODO: Setting the target needs to happen only for pre-3.7.0 projects
         if (fs.existsSync(subProjectFile)) {
-            const subProperties = this._getPropertiesFile(subProjectFile);
+            var subProperties = this._getPropertiesFile(subProjectFile);
             subProperties.set('target', parentProperties.get('target'));
             subProperties.dirty = true;
             this._subProjectDirs[subDir] = true;
@@ -103,37 +103,37 @@ class AndroidProject {
     }
 
     removeSubProject (parentDir, subDir) {
-        const parentProjectFile = path.resolve(parentDir, 'project.properties');
-        const parentProperties = this._getPropertiesFile(parentProjectFile);
+        var parentProjectFile = path.resolve(parentDir, 'project.properties');
+        var parentProperties = this._getPropertiesFile(parentProjectFile);
         removeFromPropertyList(parentProperties, 'android.library.reference', getRelativeLibraryPath(parentDir, subDir));
         delete this._subProjectDirs[subDir];
         this._dirty = true;
     }
 
     addGradleReference (parentDir, subDir) {
-        const parentProjectFile = path.resolve(parentDir, 'project.properties');
-        const parentProperties = this._getPropertiesFile(parentProjectFile);
+        var parentProjectFile = path.resolve(parentDir, 'project.properties');
+        var parentProperties = this._getPropertiesFile(parentProjectFile);
         addToPropertyList(parentProperties, 'cordova.gradle.include', getRelativeLibraryPath(parentDir, subDir));
         this._dirty = true;
     }
 
     removeGradleReference (parentDir, subDir) {
-        const parentProjectFile = path.resolve(parentDir, 'project.properties');
-        const parentProperties = this._getPropertiesFile(parentProjectFile);
+        var parentProjectFile = path.resolve(parentDir, 'project.properties');
+        var parentProperties = this._getPropertiesFile(parentProjectFile);
         removeFromPropertyList(parentProperties, 'cordova.gradle.include', getRelativeLibraryPath(parentDir, subDir));
         this._dirty = true;
     }
 
     addSystemLibrary (parentDir, value) {
-        const parentProjectFile = path.resolve(parentDir, 'project.properties');
-        const parentProperties = this._getPropertiesFile(parentProjectFile);
+        var parentProjectFile = path.resolve(parentDir, 'project.properties');
+        var parentProperties = this._getPropertiesFile(parentProjectFile);
         addToPropertyList(parentProperties, 'cordova.system.library', value);
         this._dirty = true;
     }
 
     removeSystemLibrary (parentDir, value) {
-        const parentProjectFile = path.resolve(parentDir, 'project.properties');
-        const parentProperties = this._getPropertiesFile(parentProjectFile);
+        var parentProjectFile = path.resolve(parentDir, 'project.properties');
+        var parentProperties = this._getPropertiesFile(parentProjectFile);
         removeFromPropertyList(parentProperties, 'cordova.system.library', value);
         this._dirty = true;
     }
@@ -144,8 +144,8 @@ class AndroidProject {
         }
         this._dirty = false;
 
-        for (const filename in this._propertiesEditors) {
-            const editor = this._propertiesEditors[filename];
+        for (var filename in this._propertiesEditors) {
+            var editor = this._propertiesEditors[filename];
             if (editor.dirty) {
                 fs.writeFileSync(filename, editor.toString());
                 editor.dirty = false;
@@ -165,7 +165,7 @@ class AndroidProject {
      * This checks if an Android project is clean or has old build artifacts
      */
     isClean () {
-        const build_path = path.join(this.projectDir, 'build');
+        var build_path = path.join(this.projectDir, 'build');
         // If the build directory doesn't exist, it's clean
         return !(fs.existsSync(build_path));
     }
