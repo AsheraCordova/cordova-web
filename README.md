@@ -4,8 +4,13 @@ Cordova Web is an browser application library that allows for Cordova-based proj
 
 The goal of this library is that existing browser plugins developed should work with minimal changes.
 
+# Installation
 To install the plugin use:
 
 ```
 cordova platform add https://github.com/AsheraCordova/cordova-web.git
 ```
+## Important Links
+https://asheracordova.github.io/
+
+https://asheracordova.github.io/doc/help-doc.html
