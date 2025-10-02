@@ -41,7 +41,7 @@ function getFrameworkDir (projectPath, shared) {
     return shared ? path.join(ROOT, 'framework') : path.join(projectPath, 'CordovaLib');
 }
 
-function copyJsAndLibrary (projectPath, shared, projectName, isLegacy) {} function copyJsAndLibrary1 (projectPath, shared, projectName, isLegacy) { 
+function copyJsAndLibrary (projectPath, shared, projectName, isLegacy) { 
     var nestedCordovaLibPath = getFrameworkDir(projectPath, false);
     var srcCordovaJsPath = path.join(ROOT, 'bin', 'templates', 'project', 'assets', 'www', 'cordova.js');
     var app_path = path.join(projectPath, 'app', 'src', 'main');

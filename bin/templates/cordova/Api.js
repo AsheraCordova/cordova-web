@@ -148,7 +148,7 @@ class Api {
         var project = AndroidProject.getProjectFile(this.root);
         var self = this;
 
-        installOptions = installOptions || {};installOptions.usePlatformWww = false;
+        installOptions = installOptions || {};
         installOptions.variables = installOptions.variables || {};
         // Add PACKAGE_NAME variable into vars
         if (!installOptions.variables.PACKAGE_NAME) {

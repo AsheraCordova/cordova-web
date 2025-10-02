@@ -166,17 +166,17 @@ function logFileOp (message) {
  * @param   {Object}  destinations      An object that contains destination
  *   paths for www files.
  */
-function updateWww (cordovaProject, destinations) {} function updateWww1 (cordovaProject, destinations) {
+function updateWww (cordovaProject, destinations) {
     var sourceDirs = [
         path.relative(cordovaProject.root, cordovaProject.locations.www),
         path.relative(cordovaProject.root, destinations.platformWww)
     ];
 
     // If project contains 'merges' for our platform, use them as another overrides
-    var merges_path = path.join(cordovaProject.root, 'merges', 'android');
+    var merges_path = path.join(cordovaProject.root, 'merges', 'browser');
     if (fs.existsSync(merges_path)) {
-        events.emit('verbose', 'Found "merges/android" folder. Copying its contents into the android project.');
-        sourceDirs.push(path.join('merges', 'android'));
+        events.emit('verbose', 'Found "merges/browser" folder. Copying its contents into the android project.');
+        sourceDirs.push(path.join('merges', 'browser'));
     }
 
     var targetDir = path.relative(cordovaProject.root, destinations.www);
