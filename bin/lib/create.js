@@ -41,7 +41,7 @@ function getFrameworkDir (projectPath, shared) {
     return shared ? path.join(ROOT, 'framework') : path.join(projectPath, 'CordovaLib');
 }
 
-function copyJsAndLibrary (projectPath, shared, projectName, isLegacy) { 
+function copyJsAndLibrary (projectPath, shared, projectName, isLegacy) {
     var nestedCordovaLibPath = getFrameworkDir(projectPath, false);
     var srcCordovaJsPath = path.join(ROOT, 'bin', 'templates', 'project', 'assets', 'www', 'cordova.js');
     var app_path = path.join(projectPath, 'app', 'src', 'main');
@@ -56,7 +56,7 @@ function copyJsAndLibrary (projectPath, shared, projectName, isLegacy) {
     // Copy the cordova.js file to platforms/<platform>/platform_www/
     // The www dir is nuked on each prepare so we keep cordova.js in platform_www
     fs.ensureDirSync(platform_www);
-    fs.copySync(srcCordovaJsPath, path.join(platform_www, 'cordova.js'));
+    fs.copySync(srcCordovaJsPath, path.join(platform_www, 'cordova.js'));fs.copySync(path.join(ROOT, 'bin', 'templates', 'project', 'assets', 'www', 'index.html'), path.join(platform_www, 'index.html')); 
 
     // Copy cordova-js-src directory into platform_www directory.
     // We need these files to build cordova.js if using browserify method.
