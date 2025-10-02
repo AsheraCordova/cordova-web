@@ -189,7 +189,7 @@ function updateWww (cordovaProject, destinations) {
 /**
  * Cleans all files from the platform 'www' directory.
  */
-function cleanWww (projectRoot, locations) {} function cleanWww1 (projectRoot, locations) {
+function cleanWww (projectRoot, locations) {
     var targetDir = path.relative(projectRoot, locations.www);
     events.emit('verbose', 'Cleaning ' + targetDir);
 
