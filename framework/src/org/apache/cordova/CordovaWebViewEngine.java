@@ -40,29 +40,29 @@ public interface CordovaWebViewEngine {
 
     void stopLoading();
 
-    /** Return the currently loaded URL */
+   /** Return the currently loaded URL */
     String getUrl();
 
     void clearCache();
 
-    /** After calling clearHistory(), canGoBack() should be false. */
+   /** After calling clearHistory(), canGoBack() should be false. */
     void clearHistory();
 
     boolean canGoBack();
 
-    /** Returns whether a navigation occurred */
+   /** Returns whether a navigation occurred */
     boolean goBack();
 
-    /** Pauses / resumes the WebView's event loop. */
+   /** Pauses / resumes the WebView's event loop. */
     void setPaused(boolean value);
 
-    /** Clean up all resources associated with the WebView. */
+   /** Clean up all resources associated with the WebView. */
     void destroy();
 
-    /** Add the evaulate Javascript method **/
+   /** Add the evaulate Javascript method **/
     void evaluateJavascript(String js, ValueCallback<String> callback);
 
-    /**
+   /**
      * Used to retrieve the associated CordovaWebView given a View without knowing the type of Engine.
      * E.g. ((CordovaWebView.EngineView)activity.findViewById(android.R.id.webView)).getCordovaWebView();
      */
@@ -70,7 +70,7 @@ public interface CordovaWebViewEngine {
         CordovaWebView getCordovaWebView();
     }
 
-    /**
+   /**
      * Contains methods that an engine uses to communicate with the parent CordovaWebView.
      * Methods may be added in future cordova versions, but never removed.
      */

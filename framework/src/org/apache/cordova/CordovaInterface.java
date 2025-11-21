@@ -32,7 +32,7 @@ import java.util.concurrent.ExecutorService;
  */
 public interface CordovaInterface {
 
-    /**
+   /**
      * Launch an activity for which you would like a result when it finished. When this activity exits,
      * your onActivityResult() method will be called.
      *
@@ -42,14 +42,14 @@ public interface CordovaInterface {
      */
     abstract public void startActivityForResult(CordovaPlugin command, Intent intent, int requestCode);
 
-    /**
+   /**
      * Set the plugin to be called when a sub-activity exits.
      *
      * @param plugin      The plugin on which onActivityResult is to be called
      */
     abstract public void setActivityResultCallback(CordovaPlugin plugin);
 
-    /**
+   /**
      * Get the Android activity.
      *
      * If a custom engine lives outside of the Activity's lifecycle the return value may be null.
@@ -58,14 +58,14 @@ public interface CordovaInterface {
      */
     public abstract Activity getActivity();
 
-    /**
+   /**
      * Get the Android context.
      *
      * @return the Context
      */
     public Context getContext();
 
-    /**
+   /**
      * Called when a message is sent to plugin.
      *
      * @param id            The message id
@@ -74,22 +74,22 @@ public interface CordovaInterface {
      */
     public Object onMessage(String id, Object data);
 
-    /**
+   /**
      * Returns a shared thread pool that can be used for background tasks.
      */
     public ExecutorService getThreadPool();
 
-    /**
+   /**
      * Sends a permission request to the activity for one permission.
      */
     public void requestPermission(CordovaPlugin plugin, int requestCode, String permission);
 
-    /**
+   /**
      * Sends a permission request to the activity for a group of permissions
      */
     public void requestPermissions(CordovaPlugin plugin, int requestCode, String [] permissions);
 
-    /**
+   /**
      * Check for a permission.  Returns true if the permission is granted, false otherwise.
      */
     public boolean hasPermission(String permission);

@@ -42,23 +42,23 @@ public class NativeToJsMessageQueue {
     // It may be useful to split and reassemble response messages someday.
     private static int COMBINED_RESPONSE_CUTOFF = 16 * 1024 * 1024;
 
-    /**
+   /**
      * When true, the active listener is not fired upon enqueue. When set to false,
      * the active listener will be fired if the queue is non-empty.
      */
     private boolean paused;
 
-    /**
+   /**
      * The list of JavaScript statements to be sent to JavaScript.
      */
     private final LinkedList<JsMessage> queue = new LinkedList<JsMessage>();
 
-    /**
+   /**
      * The array of listeners that can be used to send messages to JS.
      */
     private ArrayList<BridgeMode> bridgeModes = new ArrayList<BridgeMode>();
 
-    /**
+   /**
      * When null, the bridge is disabled. This occurs during page transitions.
      * When disabled, all callbacks are dropped since they are assumed to be
      * relevant to the previous page.
@@ -77,7 +77,7 @@ public class NativeToJsMessageQueue {
         return queue.isEmpty();
     }
 
-    /**
+   /**
      * Changes the bridge mode.
      */
     public void setBridgeMode(int value) {
@@ -100,7 +100,7 @@ public class NativeToJsMessageQueue {
         }
     }
 
-    /**
+   /**
      * Clears all messages and resets to the default bridge mode.
      */
     public void reset() {
@@ -123,7 +123,7 @@ public class NativeToJsMessageQueue {
         message.encodeAsMessage(sb);
     }
 
-    /**
+   /**
      * Combines and returns queued messages combined into a single string.
      *
      * Combines as many messages as possible, without exceeding
@@ -169,7 +169,7 @@ public class NativeToJsMessageQueue {
         }
     }
 
-    /**
+   /**
      * Same as popAndEncode(), except encodes in a form that can be executed as JS.
      */
     public String popAndEncodeAsJs() {
@@ -216,14 +216,14 @@ public class NativeToJsMessageQueue {
         }
     }
 
-    /**
+   /**
      * Add a JavaScript statement to the list.
      */
     public void addJavaScript(String statement) {
         enqueueMessage(new JsMessage(statement));
     }
 
-    /**
+   /**
      * Add a JavaScript statement to the list.
      */
     public void addPluginResult(PluginResult result, String callbackId) {
@@ -283,13 +283,13 @@ public class NativeToJsMessageQueue {
         public void reset() {}
     }
 
-    /** Uses JS polls for messages on a timer.. */
+   /** Uses JS polls for messages on a timer.. */
     public static class NoOpBridgeMode extends BridgeMode {
         @Override public void onNativeToJsMessageAvailable(NativeToJsMessageQueue queue) {
         }
     }
 
-    /** Uses webView.loadUrl("javascript:") to execute messages. */
+   /** Uses webView.loadUrl("javascript:") to execute messages. */
     public static class LoadUrlBridgeMode extends BridgeMode {
         private final CordovaWebViewEngine engine;
         private final CordovaInterface cordova;
@@ -312,7 +312,7 @@ public class NativeToJsMessageQueue {
         }
     }
 
-    /** Uses online/offline events to tell the JS when to poll for messages. */
+   /** Uses online/offline events to tell the JS when to poll for messages. */
     public static class OnlineEventsBridgeMode extends BridgeMode {
         private final OnlineEventsBridgeModeDelegate delegate;
         private boolean online;
@@ -359,7 +359,7 @@ public class NativeToJsMessageQueue {
         }
     }
 
-    /** Uses webView.evaluateJavascript to execute messages. */
+   /** Uses webView.evaluateJavascript to execute messages. */
     public static class EvalBridgeMode extends BridgeMode {
         private final CordovaWebViewEngine engine;
         private final CordovaInterface cordova;

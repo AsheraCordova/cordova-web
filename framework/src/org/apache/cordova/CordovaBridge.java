@@ -102,7 +102,7 @@ public class CordovaBridge {
         return true;
     }
 
-    /** Called on page transitions */
+   /** Called on page transitions */
     void clearBridgeSecret() {
         expectedBridgeSecret = -1;
     }
@@ -111,7 +111,7 @@ public class CordovaBridge {
         return expectedBridgeSecret != -1;
     }
 
-    /** Called by cordova.js to initialize the bridge. */
+   /** Called by cordova.js to initialize the bridge. */
     //On old Androids SecureRandom isn't really secure, this is the least of your problems if
     //you're running Android 4.3 and below in 2017
     @SuppressLint("TrulyRandom")

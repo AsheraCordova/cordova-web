@@ -51,7 +51,7 @@ import android.widget.FrameLayout;
  * As an example:
  *
  * <pre>
- *     package org.apache.cordova.examples;
+ *    package org.apache.cordova.examples;
  *
  *     import android.os.Bundle;
  *     import org.apache.cordova.*;
@@ -98,7 +98,7 @@ public class CordovaActivity extends Activity {
     protected ArrayList<PluginEntry> pluginEntries;
     protected CordovaInterfaceImpl cordovaInterface;
 
-    /**
+   /**
      * Called when the activity is first created.
      */
     @Override
@@ -193,7 +193,7 @@ public class CordovaActivity extends Activity {
         appView.getView().requestFocusFromTouch();
     }
 
-    /**
+   /**
      * Construct the default web view object.
      * <p/>
      * Override this to customize the webview that is used.
@@ -216,7 +216,7 @@ public class CordovaActivity extends Activity {
         };
     }
 
-    /**
+   /**
      * Load the url into the webview.
      */
     public void loadUrl(String url) {
@@ -230,7 +230,7 @@ public class CordovaActivity extends Activity {
         appView.loadUrlIntoView(url, true);
     }
 
-    /**
+   /**
      * Called when the system is about to start resuming a previous activity.
      */
     @Override
@@ -246,7 +246,7 @@ public class CordovaActivity extends Activity {
         }
     }
 
-    /**
+   /**
      * Called when the activity receives a new intent
      */
     @Override
@@ -257,7 +257,7 @@ public class CordovaActivity extends Activity {
             this.appView.onNewIntent(intent);
     }
 
-    /**
+   /**
      * Called when the activity will start interacting with the user.
      */
     @Override
@@ -277,7 +277,7 @@ public class CordovaActivity extends Activity {
         this.appView.handleResume(this.keepRunning);
     }
 
-    /**
+   /**
      * Called when the activity is no longer visible to the user.
      */
     @Override
@@ -291,7 +291,7 @@ public class CordovaActivity extends Activity {
         this.appView.handleStop();
     }
 
-    /**
+   /**
      * Called when the activity is becoming visible to the user.
      */
     @Override
@@ -305,7 +305,7 @@ public class CordovaActivity extends Activity {
         this.appView.handleStart();
     }
 
-    /**
+   /**
      * The final call you receive before your activity is destroyed.
      */
     @Override
@@ -318,7 +318,7 @@ public class CordovaActivity extends Activity {
         }
     }
 
-    /**
+   /**
      * Called when view focus is changed
      */
     @SuppressLint("InlinedApi")
@@ -345,7 +345,7 @@ public class CordovaActivity extends Activity {
         super.startActivityForResult(intent, requestCode, options);
     }
 
-    /**
+   /**
      * Called when an activity you launched exits, giving you the requestCode you started it with,
      * the resultCode it returned, and any additional data from it.
      *
@@ -361,7 +361,7 @@ public class CordovaActivity extends Activity {
         cordovaInterface.onActivityResult(requestCode, resultCode, intent);
     }
 
-    /**
+   /**
      * Report an error to the host application. These errors are unrecoverable (i.e. the main resource is unavailable).
      * The errorCode parameter corresponds to one of the ERROR_* constants.
      *
@@ -396,7 +396,7 @@ public class CordovaActivity extends Activity {
         }
     }
 
-    /**
+   /**
      * Display an error dialog and optionally exit application.
      */
     public void displayError(final String title, final String message, final String button, final boolean exit) {
@@ -426,7 +426,7 @@ public class CordovaActivity extends Activity {
         });
     }
 
-    /*
+   /*
      * Hook in Cordova for menu plugins
      */
     @Override
@@ -453,7 +453,7 @@ public class CordovaActivity extends Activity {
         return true;
     }
 
-    /**
+   /**
      * Called when a message is sent to plugin.
      *
      * @param id   The message id
@@ -479,7 +479,7 @@ public class CordovaActivity extends Activity {
         super.onSaveInstanceState(outState);
     }
 
-    /**
+   /**
      * Called by the system when the device configuration changes while your activity is running.
      *
      * @param newConfig The new device configuration
@@ -496,7 +496,7 @@ public class CordovaActivity extends Activity {
         }
     }
 
-    /**
+   /**
      * Called by the system when the user grants permissions
      *
      * @param requestCode

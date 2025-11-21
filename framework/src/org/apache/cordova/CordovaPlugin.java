@@ -44,7 +44,7 @@ public class CordovaPlugin {
     protected CordovaPreferences preferences;
     private String serviceName;
 
-    /**
+   /**
      * Call this after constructing to initialize the plugin.
      * Final because we want to be able to change args without breaking plugins.
      */
@@ -58,7 +58,7 @@ public class CordovaPlugin {
         pluginInitialize();
     }
 
-    /**
+   /**
      * Called after plugin construction and fields have been initialized.
      * Prefer to use pluginInitialize instead since there is no value in
      * having parameters on the initialize() function.
@@ -66,20 +66,20 @@ public class CordovaPlugin {
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
     }
 
-    /**
+   /**
      * Called after plugin construction and fields have been initialized.
      */
     protected void pluginInitialize() {
     }
 
-    /**
+   /**
      * Returns the plugin's service name (what you'd use when calling pluginManger.getPlugin())
      */
     public String getServiceName() {
         return serviceName;
     }
 
-    /**
+   /**
      * Executes the request.
      *
      * This method is called from the WebView thread. To do a non-trivial amount of work, use:
@@ -98,7 +98,7 @@ public class CordovaPlugin {
         return execute(action, args, callbackContext);
     }
 
-    /**
+   /**
      * Executes the request.
      *
      * This method is called from the WebView thread. To do a non-trivial amount of work, use:
@@ -117,7 +117,7 @@ public class CordovaPlugin {
         return execute(action, cordovaArgs, callbackContext);
     }
 
-    /**
+   /**
      * Executes the request.
      *
      * This method is called from the WebView thread. To do a non-trivial amount of work, use:
@@ -135,7 +135,7 @@ public class CordovaPlugin {
         return false;
     }
 
-    /**
+   /**
      * Called when the system is about to start resuming a previous activity.
      *
      * @param multitasking		Flag indicating if multitasking is turned on for app
@@ -143,7 +143,7 @@ public class CordovaPlugin {
     public void onPause(boolean multitasking) {
     }
 
-    /**
+   /**
      * Called when the activity will start interacting with the user.
      *
      * @param multitasking		Flag indicating if multitasking is turned on for app
@@ -151,31 +151,31 @@ public class CordovaPlugin {
     public void onResume(boolean multitasking) {
     }
 
-    /**
+   /**
      * Called when the activity is becoming visible to the user.
      */
     public void onStart() {
     }
 
-    /**
+   /**
      * Called when the activity is no longer visible to the user.
      */
     public void onStop() {
     }
 
-    /**
+   /**
      * Called when the activity receives a new intent.
      */
     public void onNewIntent(Intent intent) {
     }
 
-    /**
+   /**
      * The final call you receive before your activity is destroyed.
      */
     public void onDestroy() {
     }
 
-    /**
+   /**
      * Called when the Activity is being destroyed (e.g. if a plugin calls out to an external
      * Activity and the OS kills the CordovaActivity in the background). The plugin should save its
      * state in this method only if it is awaiting the result of an external Activity and needs
@@ -188,7 +188,7 @@ public class CordovaPlugin {
         return null;
     }
 
-    /**
+   /**
      * Called when a plugin is the recipient of an Activity result after the CordovaActivity has
      * been destroyed. The Bundle will be the same as the one the plugin returned in
      * onSaveInstanceState()
@@ -198,7 +198,7 @@ public class CordovaPlugin {
      */
     public void onRestoreStateForActivityResult(Bundle state, CallbackContext callbackContext) {}
 
-    /**
+   /**
      * Called when a message is sent to plugin.
      *
      * @param id            The message id
@@ -209,7 +209,7 @@ public class CordovaPlugin {
         return null;
     }
 
-    /**
+   /**
      * Called when an activity you launched exits, giving you the requestCode you started it with,
      * the resultCode it returned, and any additional data from it.
      *
@@ -222,7 +222,7 @@ public class CordovaPlugin {
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
     }
 
-    /**
+   /**
      * Hook for blocking the loading of external resources.
      *
      * This will be called when the WebView's shouldInterceptRequest wants to
@@ -242,7 +242,7 @@ public class CordovaPlugin {
         return null;
     }
 
-    /**
+   /**
      * Hook for blocking navigation by the Cordova WebView. This applies both to top-level and
      * iframe navigations.
      *
@@ -256,7 +256,7 @@ public class CordovaPlugin {
         return null;
     }
 
-    /**
+   /**
      * Hook for allowing page to call exec(). By default, this returns the result of
      * shouldAllowNavigation(). It's generally unsafe to allow untrusted content to be loaded
      * into a CordovaWebView, even within an iframe, so it's best not to touch this.
@@ -265,7 +265,7 @@ public class CordovaPlugin {
         return shouldAllowNavigation(url);
     }
 
-    /**
+   /**
      * Hook for blocking the launching of Intents by the Cordova application.
      *
      * This will be called when the WebView will not navigate to a page, but
@@ -279,7 +279,7 @@ public class CordovaPlugin {
         return null;
     }
 
-    /**
+   /**
      * Allows plugins to handle a link being clicked. Return true here to cancel the navigation.
      *
      * @param url           The URL that is trying to be loaded in the Cordova webview.
@@ -289,7 +289,7 @@ public class CordovaPlugin {
         return false;
     }
 
-    /**
+   /**
      * Hook for redirecting requests. Applies to WebView requests as well as requests made by plugins.
      * To handle the request directly, return a URI in the form:
      *
@@ -309,7 +309,7 @@ public class CordovaPlugin {
         return null;
     }
 
-    /**
+   /**
      * Called to handle CordovaResourceApi.openForRead() calls for a cdvplugin://pluginId/ URL.
      * Should never return null.
      * Added in cordova-android@4.0.0
@@ -318,7 +318,7 @@ public class CordovaPlugin {
         throw new FileNotFoundException("Plugin can't handle uri: " + uri);
     }
 
-    /**
+   /**
      * Refer to remapUri()
      * Added in cordova-android@4.0.0
      */
@@ -330,7 +330,7 @@ public class CordovaPlugin {
             .build();
     }
 
-    /**
+   /**
      * Refer to remapUri()
      * Added in cordova-android@4.0.0
      */
@@ -338,7 +338,7 @@ public class CordovaPlugin {
         return Uri.parse(pluginUri.getQueryParameter("origUri"));
     }
 
-    /**
+   /**
      * Called when the WebView does a top-level navigation or refreshes.
      *
      * Plugins should stop any long-running processes and clean up internal state.
@@ -348,7 +348,7 @@ public class CordovaPlugin {
     public void onReset() {
     }
 
-    /**
+   /**
      * Called when the system received an HTTP authentication request. Plugin can use
      * the supplied HttpAuthHandler to process this auth challenge.
      *
@@ -364,7 +364,7 @@ public class CordovaPlugin {
         return false;
     }
 
-    /**
+   /**
      * Called when he system received an SSL client certificate request.  Plugin can use
      * the supplied ClientCertRequest to process this certificate challenge.
      *
@@ -378,7 +378,7 @@ public class CordovaPlugin {
         return false;
     }
 
-    /**
+   /**
      * Called by the system when the device configuration changes while your activity is running.
      *
      * @param newConfig		The new device configuration
@@ -386,7 +386,7 @@ public class CordovaPlugin {
     public void onConfigurationChanged(Configuration newConfig) {
     }
 
-    /**
+   /**
      * Called by the Plugin Manager when we need to actually request permissions
      *
      * @param requestCode   Passed to the activity to track the request
@@ -397,7 +397,7 @@ public class CordovaPlugin {
     public void requestPermissions(int requestCode) {
     }
 
-    /*
+   /*
      * Called by the WebView implementation to check for geolocation permissions, can be used
      * by other Java methods in the event that a plugin is using this as a dependency.
      *
@@ -408,7 +408,7 @@ public class CordovaPlugin {
         return true;
     }
 
-    /**
+   /**
      * Called by the system when the user grants permissions
      *
      * @param requestCode

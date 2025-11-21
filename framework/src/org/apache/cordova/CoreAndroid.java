@@ -46,7 +46,7 @@ public class CoreAndroid extends CordovaPlugin {
     private PluginResult pendingPause;
     private final Object messageChannelLock = new Object();
 
-    /**
+   /**
      * Send an event to be fired on the Javascript side.
      *
      * @param action The name of the event to be fired
@@ -55,7 +55,7 @@ public class CoreAndroid extends CordovaPlugin {
         sendEventMessage(action);
     }
 
-    /**
+   /**
      * Sets the context of the Command. This can then be used to do things like
      * get file paths associated with the Activity.
      */
@@ -64,7 +64,7 @@ public class CoreAndroid extends CordovaPlugin {
         this.initTelephonyReceiver();
     }
 
-    /**
+   /**
      * Executes the request and returns PluginResult.
      *
      * @param action            The action to execute.
@@ -138,7 +138,7 @@ public class CoreAndroid extends CordovaPlugin {
     // LOCAL METHODS
     //--------------------------------------------------------------------------
 
-    /**
+   /**
      * Clear the resource cache.
      */
     public void clearCache() {
@@ -149,7 +149,7 @@ public class CoreAndroid extends CordovaPlugin {
         });
     }
 
-    /**
+   /**
      * Load the url into the webview.
      *
      * @param url
@@ -209,7 +209,7 @@ public class CoreAndroid extends CordovaPlugin {
         this.webView.showWebPage(url, openExternal, clearHistory, params);
     }
 
-    /**
+   /**
      * Clear page history for the app.
      */
     public void clearHistory() {
@@ -220,7 +220,7 @@ public class CoreAndroid extends CordovaPlugin {
         });
     }
 
-    /**
+   /**
      * Go to previous page displayed.
      * This is the same as pressing the backbutton on Android device.
      */
@@ -232,7 +232,7 @@ public class CoreAndroid extends CordovaPlugin {
         });
     }
 
-    /**
+   /**
      * Override the default behavior of the Android back button.
      * If overridden, when the back button is pressed, the "backKeyDown" JavaScript event will be fired.
      *
@@ -243,7 +243,7 @@ public class CoreAndroid extends CordovaPlugin {
         webView.setButtonPlumbedToJs(KeyEvent.KEYCODE_BACK, override);
     }
 
-    /**
+   /**
      * Override the default behavior of the Android volume buttons.
      * If overridden, when the volume button is pressed, the "volume[up|down]button" JavaScript event will be fired.
      *
@@ -263,7 +263,7 @@ public class CoreAndroid extends CordovaPlugin {
         }
     }
 
-    /**
+   /**
      * Return whether the Android back button is overridden by the user.
      *
      * @return boolean
@@ -272,7 +272,7 @@ public class CoreAndroid extends CordovaPlugin {
         return webView.isButtonPlumbedToJs(KeyEvent.KEYCODE_BACK);
     }
 
-    /**
+   /**
      * Exit the Android application.
      */
     public void exitApp() {
@@ -280,7 +280,7 @@ public class CoreAndroid extends CordovaPlugin {
     }
 
 
-    /**
+   /**
      * Listen for telephony events: RINGING, OFFHOOK and IDLE
      * Send these events to all plugins using
      *      CordovaActivity.onMessage("telephone", "ringing" | "offhook" | "idle")
@@ -348,7 +348,7 @@ public class CoreAndroid extends CordovaPlugin {
         }
     }
 
-    /*
+   /*
      * Unregister the receiver
      *
      */
@@ -357,7 +357,7 @@ public class CoreAndroid extends CordovaPlugin {
         webView.getContext().unregisterReceiver(this.telephonyReceiver);
     }
 
-    /**
+   /**
      * Used to send the resume event in the case that the Activity is destroyed by the OS
      *
      * @param resumeEvent PluginResult containing the payload for the resume event to be fired
@@ -376,7 +376,7 @@ public class CoreAndroid extends CordovaPlugin {
         }
     }
 
-      /*
+     /*
      * This needs to be implemented if you wish to use the Camera Plugin or other plugins
      * that read the Build Configuration.
      *

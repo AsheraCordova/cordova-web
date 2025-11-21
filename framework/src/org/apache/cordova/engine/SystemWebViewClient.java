@@ -59,14 +59,14 @@ public class SystemWebViewClient extends WebViewClient {
     private boolean doClearHistory = false;
     boolean isCurrentlyLoading;
 
-    /** The authorization tokens. */
+   /** The authorization tokens. */
     private Hashtable<String, AuthenticationToken> authenticationTokens = new Hashtable<String, AuthenticationToken>();
 
     public SystemWebViewClient(SystemWebViewEngine parentEngine) {
         this.parentEngine = parentEngine;
     }
 
-    /**
+   /**
      * Give the host application a chance to take over the control when a new url
      * is about to be loaded in the current WebView.
      *
@@ -80,7 +80,7 @@ public class SystemWebViewClient extends WebViewClient {
         return parentEngine.client.onNavigationAttempt(url);
     }
 
-    /**
+   /**
      * On received http auth request.
      * The method reacts on all registered authentication tokens. There is one and only one authentication token for any host + realm combination
      */
@@ -105,7 +105,7 @@ public class SystemWebViewClient extends WebViewClient {
         super.onReceivedHttpAuthRequest(view, handler, host, realm);
     }
 
-    /**
+   /**
      * On received client cert request.
      * The method forwards the request to any running plugins before using the default implementation.
      *
@@ -127,7 +127,7 @@ public class SystemWebViewClient extends WebViewClient {
         super.onReceivedClientCertRequest(view, request);
     }
 
-    /**
+   /**
      * Notify the host application that a page has started loading.
      * This method is called once for each main frame load so a page with iframes or framesets will call onPageStarted
      * one time for the main frame. This also means that onPageStarted will not be called when the contents of an
@@ -145,7 +145,7 @@ public class SystemWebViewClient extends WebViewClient {
         parentEngine.client.onPageStarted(url);
     }
 
-    /**
+   /**
      * Notify the host application that a page has finished loading.
      * This method is called only for main frame. When onPageFinished() is called, the rendering picture may not be updated yet.
      *
@@ -162,7 +162,7 @@ public class SystemWebViewClient extends WebViewClient {
         }
         isCurrentlyLoading = false;
 
-        /**
+       /**
          * Because of a timing issue we need to clear this history in onPageFinished as well as
          * onPageStarted. However we only want to do this if the doClearHistory boolean is set to
          * true. You see when you load a url with a # in it which is common in jQuery applications
@@ -176,7 +176,7 @@ public class SystemWebViewClient extends WebViewClient {
 
     }
 
-    /**
+   /**
      * Report an error to the host application. These errors are unrecoverable (i.e. the main resource is unavailable).
      * The errorCode parameter corresponds to one of the ERROR_* constants.
      *
@@ -210,7 +210,7 @@ public class SystemWebViewClient extends WebViewClient {
         parentEngine.client.onReceivedError(errorCode, description, failingUrl);
     }
 
-    /**
+   /**
      * Notify the host application that an SSL error occurred while loading a resource.
      * The host application must call either handler.cancel() or handler.proceed().
      * Note that the decision may be retained for use in response to future SSL errors.
@@ -244,7 +244,7 @@ public class SystemWebViewClient extends WebViewClient {
     }
 
 
-    /**
+   /**
      * Sets the authentication token.
      *
      * @param authenticationToken
@@ -261,7 +261,7 @@ public class SystemWebViewClient extends WebViewClient {
         this.authenticationTokens.put(host.concat(realm), authenticationToken);
     }
 
-    /**
+   /**
      * Removes the authentication token.
      *
      * @param host
@@ -273,7 +273,7 @@ public class SystemWebViewClient extends WebViewClient {
         return this.authenticationTokens.remove(host.concat(realm));
     }
 
-    /**
+   /**
      * Gets the authentication token.
      *
      * In order it tries:
@@ -309,7 +309,7 @@ public class SystemWebViewClient extends WebViewClient {
         return token;
     }
 
-    /**
+   /**
      * Clear all authentication tokens.
      */
     public void clearAuthenticationTokens() {

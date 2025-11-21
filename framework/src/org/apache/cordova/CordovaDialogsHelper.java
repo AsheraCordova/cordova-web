@@ -106,7 +106,7 @@ public class CordovaDialogsHelper {
         lastHandledDialog = dlg.show();
     }
 
-    /**
+   /**
      * Tell the client to display a prompt dialog to the user.
      * If the client returns true, WebView will assume that the client will
      * handle the prompt dialog and call the appropriate JsPromptResult method.

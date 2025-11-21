@@ -61,7 +61,7 @@ public class CallbackContext {
         webView.sendPluginResult(pluginResult, callbackId);
     }
 
-    /**
+   /**
      * Helper for success callbacks that just returns the Status.OK by default
      *
      * @param message           The message to add to the success result.
@@ -70,7 +70,7 @@ public class CallbackContext {
         sendPluginResult(new PluginResult(PluginResult.Status.OK, message));
     }
 
-    /**
+   /**
      * Helper for success callbacks that just returns the Status.OK by default
      *
      * @param message           The message to add to the success result.
@@ -79,7 +79,7 @@ public class CallbackContext {
         sendPluginResult(new PluginResult(PluginResult.Status.OK, message));
     }
 
-    /**
+   /**
      * Helper for success callbacks that just returns the Status.OK by default
      *
      * @param message           The message to add to the success result.
@@ -88,7 +88,7 @@ public class CallbackContext {
         sendPluginResult(new PluginResult(PluginResult.Status.OK, message));
     }
 
-    /**
+   /**
      * Helper for success callbacks that just returns the Status.OK by default
      *
      * @param message           The message to add to the success result.
@@ -97,7 +97,7 @@ public class CallbackContext {
         sendPluginResult(new PluginResult(PluginResult.Status.OK, message));
     }
 
-    /**
+   /**
      * Helper for success callbacks that just returns the Status.OK by default
      *
      * @param message           The message to add to the success result.
@@ -106,14 +106,14 @@ public class CallbackContext {
         sendPluginResult(new PluginResult(PluginResult.Status.OK, message));
     }
 
-    /**
+   /**
      * Helper for success callbacks that just returns the Status.OK by default
      */
     public void success() {
         sendPluginResult(new PluginResult(PluginResult.Status.OK));
     }
 
-    /**
+   /**
      * Helper for error callbacks that just returns the Status.ERROR by default
      *
      * @param message           The message to add to the error result.
@@ -122,7 +122,7 @@ public class CallbackContext {
         sendPluginResult(new PluginResult(PluginResult.Status.ERROR, message));
     }
 
-    /**
+   /**
      * Helper for error callbacks that just returns the Status.ERROR by default
      *
      * @param message           The message to add to the error result.
@@ -131,7 +131,7 @@ public class CallbackContext {
         sendPluginResult(new PluginResult(PluginResult.Status.ERROR, message));
     }
 
-    /**
+   /**
      * Helper for error callbacks that just returns the Status.ERROR by default
      *
      * @param message           The message to add to the error result.

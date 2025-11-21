@@ -37,7 +37,7 @@ public class BuildHelper {
 
     private static String TAG="BuildHelper";
 
-    /*
+   /*
      * This needs to be implemented if you wish to use the Camera Plugin or other plugins
      * that read the Build Configuration.
      *

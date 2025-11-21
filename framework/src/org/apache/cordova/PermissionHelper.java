@@ -31,7 +31,7 @@ import android.content.pm.PackageManager;
 public class PermissionHelper {
     private static final String LOG_TAG = "CordovaPermissionHelper";
 
-    /**
+   /**
      * Requests a "dangerous" permission for the application at runtime. This is a helper method
      * alternative to cordovaInterface.requestPermission() that does not require the project to be
      * built with cordova-android 5.0.0+
@@ -45,7 +45,7 @@ public class PermissionHelper {
         PermissionHelper.requestPermissions(plugin, requestCode, new String[] {permission});
     }
 
-    /**
+   /**
      * Requests "dangerous" permissions for the application at runtime. This is a helper method
      * alternative to cordovaInterface.requestPermissions() that does not require the project to be
      * built with cordova-android 5.0.0+
@@ -59,7 +59,7 @@ public class PermissionHelper {
         plugin.cordova.requestPermissions(plugin, requestCode, permissions);
     }
 
-    /**
+   /**
      * Checks at runtime to see if the application has been granted a permission. This is a helper
      * method alternative to cordovaInterface.hasPermission() that does not require the project to
      * be built with cordova-android 5.0.0+

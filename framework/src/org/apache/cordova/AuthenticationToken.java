@@ -25,7 +25,7 @@ public class AuthenticationToken {
     private String userName;
     private String password;
 
-    /**
+   /**
      * Gets the user name.
      *
      * @return the user name
@@ -34,7 +34,7 @@ public class AuthenticationToken {
         return userName;
     }
 
-    /**
+   /**
      * Sets the user name.
      *
      * @param userName
@@ -44,7 +44,7 @@ public class AuthenticationToken {
         this.userName = userName;
     }
 
-    /**
+   /**
      * Gets the password.
      *
      * @return the password
@@ -53,7 +53,7 @@ public class AuthenticationToken {
         return password;
     }
 
-    /**
+   /**
      * Sets the password.
      *
      * @param password

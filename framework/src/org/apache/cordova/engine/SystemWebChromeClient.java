@@ -74,7 +74,7 @@ public class SystemWebChromeClient extends WebChromeClient {
         dialogsHelper = new CordovaDialogsHelper(appContext);
     }
 
-    /**
+   /**
      * Tell the client to display a javascript alert dialog.
      */
     @Override
@@ -91,7 +91,7 @@ public class SystemWebChromeClient extends WebChromeClient {
         return true;
     }
 
-    /**
+   /**
      * Tell the client to display a confirm dialog to the user.
      */
     @Override
@@ -109,7 +109,7 @@ public class SystemWebChromeClient extends WebChromeClient {
         return true;
     }
 
-    /**
+   /**
      * Tell the client to display a prompt dialog to the user.
      * If the client returns true, WebView will assume that the client will
      * handle the prompt dialog and call the appropriate JsPromptResult method.
@@ -138,7 +138,7 @@ public class SystemWebChromeClient extends WebChromeClient {
         return true;
     }
 
-    /**
+   /**
      * Handle database quota exceeded notification.
      */
     @Override
@@ -151,7 +151,7 @@ public class SystemWebChromeClient extends WebChromeClient {
     }
 
     @Override
-    /**
+   /**
      * Instructs the client to show a prompt to ask the user to set the Geolocation permission state for the specified origin.
      *
      * This also checks for the Geolocation Plugin and requests permission from the application  to use Geolocation.
@@ -184,7 +184,7 @@ public class SystemWebChromeClient extends WebChromeClient {
     }
 
     @Override
-    /**
+   /**
      * Ask the host application for a custom progress view to show while
      * a <video> is loading.
      * @return View The progress view.

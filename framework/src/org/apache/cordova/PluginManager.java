@@ -74,7 +74,7 @@ public class PluginManager {
         }
     }
 
-    /**
+   /**
      * Init when loading a new HTML page into webview.
      */
     public void init() {
@@ -86,7 +86,7 @@ public class PluginManager {
         this.startupPlugins();
     }
 
-    /**
+   /**
      * Create plugins objects that have onload set.
      */
     private void startupPlugins() {
@@ -101,7 +101,7 @@ public class PluginManager {
         }
     }
 
-    /**
+   /**
      * Receives a request for execution and fulfills it by finding the appropriate
      * Java class and calling it's execute method.
      *
@@ -148,7 +148,7 @@ public class PluginManager {
         }
     }
 
-    /**
+   /**
      * Get the plugin object that implements the service.
      * If the plugin object does not already exist, then create it.
      * If the service doesn't exist, then return null.
@@ -174,7 +174,7 @@ public class PluginManager {
         return ret;
     }
 
-    /**
+   /**
      * Add a plugin class that implements a service to the service entry table.
      * This does not create the plugin object instance.
      *
@@ -186,7 +186,7 @@ public class PluginManager {
         this.addService(entry);
     }
 
-    /**
+   /**
      * Add a plugin class that implements a service to the service entry table.
      * This does not create the plugin object instance.
      *
@@ -200,7 +200,7 @@ public class PluginManager {
         }
     }
 
-    /**
+   /**
      * Called when the system is about to start resuming a previous activity.
      *
      * @param multitasking      Flag indicating if multitasking is turned on for app
@@ -213,7 +213,7 @@ public class PluginManager {
         }
     }
 
-    /**
+   /**
      * Called when the system received an HTTP authentication request. Plugins can use
      * the supplied HttpAuthHandler to process this auth challenge.
      *
@@ -234,7 +234,7 @@ public class PluginManager {
         return false;
     }
 
-    /**
+   /**
      * Called when he system received an SSL client certificate request.  Plugin can use
      * the supplied ClientCertRequest to process this certificate challenge.
      *
@@ -253,7 +253,7 @@ public class PluginManager {
         return false;
     }
 
-    /**
+   /**
      * Called when the activity will start interacting with the user.
      *
      * @param multitasking      Flag indicating if multitasking is turned on for app
@@ -266,7 +266,7 @@ public class PluginManager {
         }
     }
 
-    /**
+   /**
      * Called when the activity is becoming visible to the user.
      */
     public void onStart() {
@@ -277,7 +277,7 @@ public class PluginManager {
         }
     }
 
-    /**
+   /**
      * Called when the activity is no longer visible to the user.
      */
     public void onStop() {
@@ -288,7 +288,7 @@ public class PluginManager {
         }
     }
 
-    /**
+   /**
      * The final call you receive before your activity is destroyed.
      */
     public void onDestroy() {
@@ -299,7 +299,7 @@ public class PluginManager {
         }
     }
 
-    /**
+   /**
      * Send a message to all plugins.
      *
      * @param id                The message id
@@ -318,7 +318,7 @@ public class PluginManager {
         return ctx.onMessage(id, data);
     }
 
-    /**
+   /**
      * Called when the activity receives a new intent.
      */
     public void onNewIntent(Intent intent) {
@@ -329,7 +329,7 @@ public class PluginManager {
         }
     }
 
-    /**
+   /**
      * Called when the webview is going to request an external resource.
      *
      * This delegates to the installed plugins, and returns true/false for the
@@ -367,7 +367,7 @@ public class PluginManager {
         return false;
     }
 
-    /**
+   /**
      * Called when the webview is going to change the URL of the loaded content.
      *
      * This delegates to the installed plugins, and returns true/false for the
@@ -394,7 +394,7 @@ public class PluginManager {
     }
 
 
-    /**
+   /**
      * Called when the webview is requesting the exec() bridge be enabled.
      */
     public boolean shouldAllowBridgeAccess(String url) {
@@ -412,7 +412,7 @@ public class PluginManager {
         return url.startsWith("file://");
     }
 
-    /**
+   /**
      * Called when the webview is going not going to navigate, but may launch
      * an Intent for an URL.
      *
@@ -439,7 +439,7 @@ public class PluginManager {
         return false;
     }
 
-    /**
+   /**
      * Called when the URL of the webview changes.
      *
      * @param url               The URL that is being changed to.
@@ -455,7 +455,7 @@ public class PluginManager {
         return false;
     }
 
-    /**
+   /**
      * Called when the app navigates or refreshes.
      */
     public void onReset() {
@@ -478,7 +478,7 @@ public class PluginManager {
         return null;
     }
 
-    /**
+   /**
      * Create a plugin based on class name.
      */
     private CordovaPlugin instantiatePlugin(String className) {
@@ -498,7 +498,7 @@ public class PluginManager {
         return ret;
     }
 
-    /**
+   /**
      * Called by the system when the device configuration changes while your activity is running.
      *
      * @param newConfig		The new device configuration

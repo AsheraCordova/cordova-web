@@ -37,7 +37,7 @@ public class LOG {
     // Current log level
     public static int LOGLEVEL = Log.ERROR;
 
-    /**
+   /**
      * Set the current log level.
      *
      * @param logLevel
@@ -47,7 +47,7 @@ public class LOG {
         Log.i("CordovaLog", "Changing log level to " + logLevel);
     }
 
-    /**
+   /**
      * Set the current log level.
      *
      * @param logLevel
@@ -61,7 +61,7 @@ public class LOG {
         Log.i("CordovaLog", "Changing log level to " + logLevel + "(" + LOGLEVEL + ")");
     }
 
-    /**
+   /**
      * Determine if log level will be logged
      *
      * @param logLevel
@@ -71,7 +71,7 @@ public class LOG {
         return (logLevel >= LOGLEVEL);
     }
 
-    /**
+   /**
      * Verbose log message.
      *
      * @param tag
@@ -81,7 +81,7 @@ public class LOG {
         if (LOG.VERBOSE >= LOGLEVEL) Log.v(tag, s);
     }
 
-    /**
+   /**
      * Debug log message.
      *
      * @param tag
@@ -91,7 +91,7 @@ public class LOG {
         if (LOG.DEBUG >= LOGLEVEL) Log.d(tag, s);
     }
 
-    /**
+   /**
      * Info log message.
      *
      * @param tag
@@ -101,7 +101,7 @@ public class LOG {
         if (LOG.INFO >= LOGLEVEL) Log.i(tag, s);
     }
 
-    /**
+   /**
      * Warning log message.
      *
      * @param tag
@@ -111,7 +111,7 @@ public class LOG {
         if (LOG.WARN >= LOGLEVEL) Log.w(tag, s);
     }
 
-    /**
+   /**
      * Error log message.
      *
      * @param tag
@@ -121,7 +121,7 @@ public class LOG {
         if (LOG.ERROR >= LOGLEVEL) Log.e(tag, s);
     }
 
-    /**
+   /**
      * Verbose log message.
      *
      * @param tag
@@ -132,7 +132,7 @@ public class LOG {
         if (LOG.VERBOSE >= LOGLEVEL) Log.v(tag, s, e);
     }
 
-    /**
+   /**
      * Debug log message.
      *
      * @param tag
@@ -143,7 +143,7 @@ public class LOG {
         if (LOG.DEBUG >= LOGLEVEL) Log.d(tag, s, e);
     }
 
-    /**
+   /**
      * Info log message.
      *
      * @param tag
@@ -154,7 +154,7 @@ public class LOG {
         if (LOG.INFO >= LOGLEVEL) Log.i(tag, s, e);
     }
 
-    /**
+   /**
      * Warning log message.
      *
      * @param tag
@@ -164,7 +164,7 @@ public class LOG {
         if (LOG.WARN >= LOGLEVEL) Log.w(tag, e);
     }
 
-    /**
+   /**
      * Warning log message.
      *
      * @param tag
@@ -175,7 +175,7 @@ public class LOG {
         if (LOG.WARN >= LOGLEVEL) Log.w(tag, s, e);
     }
 
-    /**
+   /**
      * Error log message.
      *
      * @param tag
@@ -186,7 +186,7 @@ public class LOG {
         if (LOG.ERROR >= LOGLEVEL) Log.e(tag, s, e);
     }
 
-    /**
+   /**
      * Verbose log message with printf formatting.
      *
      * @param tag
@@ -197,7 +197,7 @@ public class LOG {
         if (LOG.VERBOSE >= LOGLEVEL) Log.v(tag, String.format(s, args));
     }
 
-    /**
+   /**
      * Debug log message with printf formatting.
      *
      * @param tag
@@ -208,7 +208,7 @@ public class LOG {
         if (LOG.DEBUG >= LOGLEVEL) Log.d(tag, String.format(s, args));
     }
 
-    /**
+   /**
      * Info log message with printf formatting.
      *
      * @param tag
@@ -219,7 +219,7 @@ public class LOG {
         if (LOG.INFO >= LOGLEVEL) Log.i(tag, String.format(s, args));
     }
 
-    /**
+   /**
      * Warning log message with printf formatting.
      *
      * @param tag
@@ -230,7 +230,7 @@ public class LOG {
         if (LOG.WARN >= LOGLEVEL) Log.w(tag, String.format(s, args));
     }
 
-    /**
+   /**
      * Error log message with printf formatting.
      *
      * @param tag

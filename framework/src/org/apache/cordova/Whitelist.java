@@ -100,7 +100,7 @@ public class Whitelist {
         this.whiteList = new ArrayList<URLPattern>();
     }
 
-    /* Match patterns (from http://developer.chrome.com/extensions/match_patterns.html)
+   /* Match patterns (from http://developer.chrome.com/extensions/match_patterns.html)
      *
      * <url-pattern> := <scheme>://<host><path>
      * <scheme> := '*' | 'http' | 'https' | 'file' | 'ftp' | 'chrome-extension'
@@ -145,7 +145,7 @@ public class Whitelist {
     }
 
 
-    /**
+   /**
      * Determine if URL is in approved list of URLs to load.
      *
      * @param uri

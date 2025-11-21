@@ -66,7 +66,7 @@ public class CordovaWebViewImpl implements CordovaWebView {
     // The URL passed to loadUrl(), not necessarily the URL of the current page.
     String loadedUrl;
 
-    /** custom view created by the browser (a video player for example) */
+   /** custom view created by the browser (a video player for example) */
     private View mCustomView;
     private WebChromeClient.CustomViewCallback mCustomViewCallback;
 

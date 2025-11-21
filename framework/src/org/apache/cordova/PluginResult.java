@@ -117,7 +117,7 @@ public class PluginResult {
         return multipartMessages.get(index);
     }
 
-    /**
+   /**
      * If messageType == MESSAGE_TYPE_STRING, then returns the message string.
      * Otherwise, returns null.
      */

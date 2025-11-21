@@ -23,12 +23,12 @@ package org.apache.cordova;
  * specifying user credentials.
  */
  public interface ICordovaHttpAuthHandler {
-    /**
+   /**
      * Instructs the WebView to cancel the authentication request.
      */
     public void cancel ();
 
-    /**
+   /**
      * Instructs the WebView to proceed with the authentication with the given credentials.
      *
      * @param username The user name

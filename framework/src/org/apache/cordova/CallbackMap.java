@@ -34,7 +34,7 @@ public class CallbackMap {
         this.callbacks = new SparseArray<Pair<CordovaPlugin, Integer>>();
     }
 
-    /**
+   /**
      * Stores a CordovaPlugin and request code and returns a new unique request code to use
      * in a permission request.
      *
@@ -49,7 +49,7 @@ public class CallbackMap {
         return mappedId;
     }
 
-    /**
+   /**
      * Retrieves and removes a callback stored in the map using the mapped request code
      * obtained from registerCallback()
      *

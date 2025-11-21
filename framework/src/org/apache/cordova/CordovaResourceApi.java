@@ -141,7 +141,7 @@ public class CordovaResourceApi {
         return remapUri(Uri.fromFile(new File(path))).getPath();
     }
 
-    /**
+   /**
      * Returns a File that points to the resource, or null if the resource
      * is not on the local filesystem.
      */
@@ -220,7 +220,7 @@ public class CordovaResourceApi {
         return MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
     }
 
-    /**
+   /**
      * Opens a stream to the given URI, also providing the MIME type & length.
      * @return Never returns null.
      * @throws Throws an InvalidArgumentException for relative URIs. Relative URIs should be
@@ -232,7 +232,7 @@ public class CordovaResourceApi {
         return openForRead(uri, false);
     }
 
-    /**
+   /**
      * Opens a stream to the given URI, also providing the MIME type & length.
      * @return Never returns null.
      * @throws Throws an InvalidArgumentException for relative URIs. Relative URIs should be
@@ -311,7 +311,7 @@ public class CordovaResourceApi {
         return openOutputStream(uri, false);
     }
 
-    /**
+   /**
      * Opens a stream to the given URI.
      * @return Never returns null.
      * @throws Throws an InvalidArgumentException for relative URIs. Relative URIs should be

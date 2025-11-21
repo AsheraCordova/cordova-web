@@ -47,7 +47,7 @@ public interface CordovaWebView {
 
     void clearCache();
 
-    /** Use parameter-less overload */
+   /** Use parameter-less overload */
     @Deprecated
     void clearCache(boolean b);
 
@@ -67,7 +67,7 @@ public interface CordovaWebView {
 
     void handleDestroy();
 
-    /**
+   /**
      * Send JavaScript statement back to JavaScript.
      *
      * Deprecated (https://issues.apache.org/jira/browse/CB-6851)
@@ -91,7 +91,7 @@ public interface CordovaWebView {
     @Deprecated
     void sendJavascript(String statememt);
 
-    /**
+   /**
      * Load the specified URL in the Cordova webview or a new browser instance.
      *
      * NOTE: If openExternal is false, only whitelisted URLs can be loaded.
@@ -103,19 +103,19 @@ public interface CordovaWebView {
      */
     void showWebPage(String url, boolean openExternal, boolean clearHistory, Map<String, Object> params);
 
-    /**
+   /**
      * Deprecated in 4.0.0. Use your own View-toggling logic.
      */
     @Deprecated
     boolean isCustomViewShowing();
 
-    /**
+   /**
      * Deprecated in 4.0.0. Use your own View-toggling logic.
      */
     @Deprecated
     void showCustomView(View view, CustomViewCallback callback);
 
-    /**
+   /**
      * Deprecated in 4.0.0. Use your own View-toggling logic.
      */
     @Deprecated

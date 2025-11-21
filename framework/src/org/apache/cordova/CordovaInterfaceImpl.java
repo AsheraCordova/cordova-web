@@ -104,7 +104,7 @@ public class CordovaInterfaceImpl implements CordovaInterface {
         return threadPool;
     }
 
-    /**
+   /**
      * Dispatches any pending onActivityResult callbacks and sends the resume event if the
      * Activity was destroyed by the OS.
      */
@@ -133,7 +133,7 @@ public class CordovaInterfaceImpl implements CordovaInterface {
         }
     }
 
-    /**
+   /**
      * Routes the result to the awaiting plugin. Returns false if no plugin was waiting.
      */
     public boolean onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -163,7 +163,7 @@ public class CordovaInterfaceImpl implements CordovaInterface {
         return false;
     }
 
-    /**
+   /**
      * Call this from your startActivityForResult() overload. This is required to catch the case
      * where plugins use Activity.startActivityForResult() + CordovaInterface.setActivityResultCallback()
      * rather than CordovaInterface.startActivityForResult().
@@ -172,7 +172,7 @@ public class CordovaInterfaceImpl implements CordovaInterface {
         activityResultRequestCode = requestCode;
     }
 
-    /**
+   /**
      * Saves parameters for startActivityForResult().
      */
     public void onSaveInstanceState(Bundle outState) {
@@ -186,7 +186,7 @@ public class CordovaInterfaceImpl implements CordovaInterface {
 
     }
 
-    /**
+   /**
      * Call this from onCreate() so that any saved startActivityForResult parameters will be restored.
      */
     public void restoreInstanceState(Bundle savedInstanceState) {
@@ -207,7 +207,7 @@ public class CordovaInterfaceImpl implements CordovaInterface {
         }
     }
 
-    /**
+   /**
      * Called by the system when the user grants permissions
      *
      * @param requestCode

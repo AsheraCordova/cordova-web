@@ -37,7 +37,7 @@ public class CordovaClientCertRequest implements ICordovaClientCertRequest {
         this.request = request;
     }
 
-    /**
+   /**
      * Cancel this request
      */
     @SuppressLint("NewApi")
@@ -46,7 +46,7 @@ public class CordovaClientCertRequest implements ICordovaClientCertRequest {
         request.cancel();
     }
 
-    /*
+   /*
      * Returns the host name of the server requesting the certificate.
      */
     @SuppressLint("NewApi")
@@ -55,7 +55,7 @@ public class CordovaClientCertRequest implements ICordovaClientCertRequest {
         return request.getHost();
     }
 
-    /*
+   /*
      * Returns the acceptable types of asymmetric keys (can be null).
      */
     @SuppressLint("NewApi")
@@ -64,7 +64,7 @@ public class CordovaClientCertRequest implements ICordovaClientCertRequest {
         return request.getKeyTypes();
     }
 
-    /*
+   /*
      * Returns the port number of the server requesting the certificate.
      */
     @SuppressLint("NewApi")
@@ -73,7 +73,7 @@ public class CordovaClientCertRequest implements ICordovaClientCertRequest {
         return request.getPort();
     }
 
-    /*
+   /*
      * Returns the acceptable certificate issuers for the certificate matching the private key (can be null).
      */
     @SuppressLint("NewApi")
@@ -82,7 +82,7 @@ public class CordovaClientCertRequest implements ICordovaClientCertRequest {
         return request.getPrincipals();
     }
 
-    /*
+   /*
      * Ignore the request for now. Do not remember user's choice.
      */
     @SuppressLint("NewApi")
@@ -91,7 +91,7 @@ public class CordovaClientCertRequest implements ICordovaClientCertRequest {
         request.ignore();
     }
 
-    /*
+   /*
      * Proceed with the specified private key and client certificate chain. Remember the user's positive choice and use it for future requests.
      *
      * @param privateKey The privateKey
